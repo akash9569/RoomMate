@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+.custom-footer {
+  background-color: #3f3f3f;
+  font-family: 'Poppins', sans-serif;
+}
+
+.list-unstyled {
+  color: #828080;
+  opacity: 1;
+}
+
+.custom-footer a {
+  text-decoration: none;
+  color: #828080; 
+}
+
+.custom-footer a:hover {
+  color: #cccccc; 
+}
+.small{
+    color: #828080;
+}

@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+.testimonials-section {
+  background-color: #f9f9f9;
+  font-family: 'Poppins', sans-serif;
+}
+
+.infinite-scroll-wrapper {
+  overflow: hidden;
+  padding: 0 50px; /* This adds 50px left & right margin */
+  position: relative;
+  width: 100%;
+}
+
+.scroll-track {
+  display: flex;
+  gap: 1rem;
+  animation: scrollLoop 30s linear infinite;
+  width: max-content;
+}
+
+.testimonial-card {
+  min-width: 300px;
+  max-width: 300px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  background-color: #fff;
+  transition: transform 0.3s;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Stars */
+.stars i {
+  margin-right: 2px;
+}
+
+/* Hide scrollbar (just in case) */
+.infinite-scroll-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+/* Infinite scroll animation */
+@keyframes scrollLoop {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Pause on hover */
+.infinite-scroll-wrapper:hover .scroll-track {
+  animation-play-state: paused;
+}
