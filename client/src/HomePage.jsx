@@ -2,6 +2,8 @@ import React from 'react';
 import NavbarComponent from './components/NavbarComponent';
 import HeroSection from './components/HeroSection';
 import TopCitiesSection from './components/TopCitiesSection';
+import Testimonials from './components/Testimonials';
+import Footer from './components/Footer';
 
 const HomePage = () => {
   return (
@@ -9,6 +11,8 @@ const HomePage = () => {
       <NavbarComponent />
       <HeroSection />
       <TopCitiesSection />
+      <Testimonials />
+      <Footer />
       {/* You can add Footer or other sections here */}
     </>
   );
