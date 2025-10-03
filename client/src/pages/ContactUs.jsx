@@ -65,7 +65,7 @@ const ContactUs = () => {
 
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '150px' }}>
         <div style={{
           maxWidth: '600px',
@@ -163,7 +163,7 @@ const ContactUs = () => {
           </form>
         </div>
       </div>
-     <Footer/>
+      <Footer />
     </>
   );
 };
