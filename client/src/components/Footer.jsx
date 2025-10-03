@@ -53,11 +53,10 @@ const Footer = () => {
           <div className="col-md-3 mb-4">
             <h6 className="text-uppercase mb-3">Company</h6>
             <ul className="list-unstyled">
-              <li><a href="#">Contact Us</a></li>
-              <li><a href="#">Terms Of Use</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Refund Policy</a></li>
-              <li><a href="#">Sitemap</a></li>
+              <li><a href="/contactus">Contact Us</a></li>
+              <li><a href="/termsofuse">Terms Of Use</a></li>
+              <li><a href="/privacy&policy">Privacy Policy</a></li>
+              <li><a href="/refund">Refund Policy</a></li>
             </ul>
           </div>
         </div>
