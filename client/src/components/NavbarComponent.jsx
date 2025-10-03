@@ -43,19 +43,6 @@ const NavbarComponent = () => {
         style={{ zIndex: 10 }}
       >
         <Container>
-<<<<<<< HEAD
-<<<<<<< HEAD
-          <Navbar.Brand href="#" className="fw-bold">FindMyRoom</Navbar.Brand>
-          <Nav className="ms-auto d-flex align-items-center">
-            
-            {/* Post Listing Button (White outline on dark background) */}
-            <Button variant="outline-light" className="me-3">Post Listing</Button>
-            
-            {/* Find A Room Link */}
-            <Nav.Link href="#" className="text-white me-3">Find A Room</Nav.Link>
-=======
-=======
->>>>>>> b33cd56ea967de733c212f55403b883003d3ad39
           <Navbar.Brand href="#" className="fw-bold">
             RoomMate
           </Navbar.Brand>
@@ -68,10 +55,6 @@ const NavbarComponent = () => {
             <Nav.Link href="#" className="text-white me-3">
               Find A Room
             </Nav.Link>
-<<<<<<< HEAD
->>>>>>> b33cd56ea967de733c212f55403b883003d3ad39
-=======
->>>>>>> b33cd56ea967de733c212f55403b883003d3ad39
 
             <Dropdown>
               <Dropdown.Toggle
