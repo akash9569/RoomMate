@@ -44,7 +44,7 @@ const NavbarComponent = () => {
       >
         <Container>
           <Navbar.Brand href="#" className="fw-bold">
-            RoomMate
+            <i class="fa-solid fa-house fa-bounce"></i> RoomMate
           </Navbar.Brand>
 
           <Nav className="ms-auto d-flex align-items-center">

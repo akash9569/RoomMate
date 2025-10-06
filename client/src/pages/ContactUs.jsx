@@ -66,7 +66,7 @@ const ContactUs = () => {
   return (
     <>
     <Navbar/>
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '150px' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '150px', marginBottom: '50px' }}>
         <div style={{
           maxWidth: '600px',
           width: '100%',
