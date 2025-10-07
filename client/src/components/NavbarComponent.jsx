@@ -43,8 +43,8 @@ const NavbarComponent = () => {
         style={{ zIndex: 10 }}
       >
         <Container>
-          <Navbar.Brand href="#" className="fw-bold">
-            <i class="fa-solid fa-house fa-bounce"></i> RoomMate
+          <Navbar.Brand href="/" className="fw-bold">
+            RoomMate
           </Navbar.Brand>
 
           <Nav className="ms-auto d-flex align-items-center">
