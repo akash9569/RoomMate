@@ -4,7 +4,6 @@ import Footer from '../components/Footer';
 
 // Define the new color palette
 const colors = {
-  primaryAccent: '#008080', // Teal/Cyan for headings
   background: '#f4f7f6', // Soft light grey background
   contentBox: '#ffffff', // White content box
   text: '#3c4043', // Dark grey text for readability
@@ -14,31 +13,27 @@ const colors = {
 // Define the updated styles object
 const styles = {
   container: {
-    backgroundColor: colors.background,
     minHeight: '100vh',
     padding: '20px',
     display: 'flex',
     justifyContent: 'center',
-    marginTop: '120px',
+    marginTop: '100px',
+    marginBottom: '25px'
   },
   contentBox: {
     maxWidth: '1100px',
     width: '100%',
-    backgroundColor: colors.contentBox,
     padding: '30px 40px',
     borderRadius: '12px',
     boxShadow: colors.boxShadow,
-    color: colors.text,
     lineHeight: '1.7',
     fontSize: '16px',
   },
   heading: {
     textAlign: 'center',
     marginBottom: '30px',
-    color: colors.primaryAccent,
   },
   subHeading: {
-    color: colors.primaryAccent,
     marginTop: '20px',
     marginBottom: '10px',
   },

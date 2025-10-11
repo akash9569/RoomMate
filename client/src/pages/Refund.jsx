@@ -7,7 +7,7 @@ const Refund = () => {
     <>
     <Navbar/>
     <div className="container my-5 d-flex justify-content-center">
-      <div className="card shadow-lg w-100" style={{ maxWidth: "900px" }}>
+      <div className="card shadow-lg w-100" style={{ maxWidth: "900px", marginTop:"70px" }}>
         <div className="card-body p-5">
           <h1 className="card-title text-center mb-4">Refund Policy</h1>
 
@@ -15,7 +15,7 @@ const Refund = () => {
             Last Updated Date: October 3, 2022
           </p>
 
-          <h5 className="fw-bold mt-3">1. GENERAL</h5>
+          <h5>1. GENERAL</h5>
 
           <p className="mb-2">
             A. This website with the URL of{" "}
@@ -56,7 +56,7 @@ const Refund = () => {
             from us if you are not happy with your purchase.
           </p>
 
-          <h5 className="fw-bold mt-4">2. DEFINITIONS</h5>
+          <h5>2. DEFINITIONS</h5>
           <p>
             A. "Business Days" - means a day that is not a Saturday, Sunday,
             public holiday, or bank holiday in India or in the state where our

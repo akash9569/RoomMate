@@ -7,7 +7,7 @@ const PrivacyPolicy = () => {
     <>
       <Navbar />
       <div className="container my-5 d-flex justify-content-center">
-        <div className="card shadow-lg w-100" style={{ maxWidth: "900px" }}>
+        <div className="card shadow-lg w-100" style={{ maxWidth: "900px", marginTop:"70px"  }}>
           <div className="card-body p-5">
             <h1 className="card-title text-center  mb-4">Privacy Policy</h1>
 
