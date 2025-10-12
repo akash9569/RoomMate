@@ -5,7 +5,11 @@ import TopCitiesSection from './components/TopCitiesSection';
 import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import CommunityStats from './components/CommunityStats';
+<<<<<<< Updated upstream
 import Chatbot from './components/Chatbot';
+=======
+import Listings from './components/Listing';
+>>>>>>> Stashed changes
 
 const HomePage = () => {
   return (
@@ -13,6 +17,7 @@ const HomePage = () => {
       <NavbarComponent />
       <HeroSection />
       <TopCitiesSection />
+      <Listings />
       <CommunityStats />
       <Testimonials />
       <Chatbot/>

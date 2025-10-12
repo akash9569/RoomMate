@@ -1,39 +1,67 @@
-import React, { useState, useEffect } from 'react';
-import { Navbar, Nav, Button, Container, Dropdown } from 'react-bootstrap';
-import { BsPersonCircle } from 'react-icons/bs';
-import { useLocation } from 'react-router-dom'; // 👈 for route detection
-import AuthModal from './AuthModal';
+import React, { useState, useEffect } from "react";
+import { Navbar, Nav, Button, Container, Dropdown } from "react-bootstrap";
+import { BsPersonCircle } from "react-icons/bs";
+import { useLocation, useNavigate } from "react-router-dom";
+import AuthModal from "./AuthModal";
 
 const NavbarComponent = () => {
-  const [showLogin, setShowLogin] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [isLoginMode, setIsLoginMode] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    localStorage.getItem("isLoggedIn") === "true"
+  );
   const [scrolled, setScrolled] = useState(false);
 
-  const location = useLocation(); // 👈 current route
-  const isHomePage = location.pathname === '/'; // 👈 check if on home page
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHomePage = location.pathname === "/";
 
-  // Scroll effect only for home page
+  // ✅ Scroll effect only for homepage
   useEffect(() => {
-    if (!isHomePage) return; // 👈 no scroll effect for other pages
-
-    const handleScroll = () => {
-      const offset = window.scrollY;
-      setScrolled(offset > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    if (!isHomePage) return;
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [isHomePage]);
 
-  const handleSwitchToRegister = () => {
-    setShowLogin(false);
-    setShowRegister(true);
+  // ✅ Handle successful login
+  const handleLoginSuccess = (redirectToPost = false) => {
+    setIsAuthenticated(true);
+    setShowAuthModal(false);
+
+    if (redirectToPost) {
+      navigate("/postlisting");
+    }
   };
 
-  const handleSwitchToLogin = () => {
-    setShowRegister(false);
-    setShowLogin(true);
+  // ✅ Logout function
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userEmail");
+    setIsAuthenticated(false);
+    navigate("/");
   };
+
+  // ✅ Handle Post Listing button click
+  const handlePostListing = () => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    if (!isLoggedIn) {
+      setIsLoginMode(true);
+      setShowAuthModal(true);
+      localStorage.setItem("redirectAfterLogin", "postlisting");
+      return;
+    }
+    navigate("/postlisting");
+  };
+
+  // ✅ After login, redirect automatically if login was triggered from Post Listing
+  useEffect(() => {
+    const redirect = localStorage.getItem("redirectAfterLogin");
+    if (isAuthenticated && redirect === "postlisting") {
+      localStorage.removeItem("redirectAfterLogin");
+      navigate("/postlisting");
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <>
@@ -44,19 +72,27 @@ const NavbarComponent = () => {
         className={`p-3 w-100 transition-navbar ${
           isHomePage
             ? scrolled
-              ? 'bg-dark shadow-sm'
-              : 'bg-transparent'
-            : 'bg-dark shadow-sm'
+              ? "bg-dark shadow-sm"
+              : "bg-transparent"
+            : "bg-dark shadow-sm"
         }`}
         style={{ zIndex: 10 }}
       >
         <Container>
-          <Navbar.Brand href="/" className="fw-bold">
+          <Navbar.Brand
+            onClick={() => navigate("/")}
+            className="fw-bold text-white"
+            style={{ cursor: "pointer" }}
+          >
             RoomMate
           </Navbar.Brand>
 
           <Nav className="ms-auto d-flex align-items-center">
-            <Button variant="outline-light" className="me-3">
+            <Button
+              variant="outline-light"
+              className="me-3"
+              onClick={handlePostListing}
+            >
               Post Listing
             </Button>
 
@@ -64,43 +100,58 @@ const NavbarComponent = () => {
               Find A Room
             </Nav.Link>
 
-            <Dropdown>
+            <Dropdown align="end">
               <Dropdown.Toggle
                 variant="link"
                 id="profile-dropdown"
                 className="text-white p-0"
               >
-                <BsPersonCircle size={24} style={{ marginBottom: '2px' }} />
+                <BsPersonCircle size={24} />
               </Dropdown.Toggle>
 
-              <Dropdown.Menu data-bs-theme="dark" align="end">
-                <Dropdown.Header>My Account</Dropdown.Header>
-                <Dropdown.Item onClick={() => setShowLogin(true)}>
-                  Login
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => setShowRegister(true)}>
-                  Register
-                </Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item href="#">My Listings</Dropdown.Item>
+              <Dropdown.Menu data-bs-theme="dark">
+                {!isAuthenticated ? (
+                  <>
+                    <Dropdown.Header>My Account</Dropdown.Header>
+                    <Dropdown.Item
+                      onClick={() => {
+                        setIsLoginMode(true);
+                        setShowAuthModal(true);
+                      }}
+                    >
+                      Login
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => {
+                        setIsLoginMode(false);
+                        setShowAuthModal(true);
+                      }}
+                    >
+                      Register
+                    </Dropdown.Item>
+                  </>
+                ) : (
+                  <>
+                    <Dropdown.Item onClick={handleLogout}>
+                      Logout
+                    </Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item href="#">My Listings</Dropdown.Item>
+                  </>
+                )}
               </Dropdown.Menu>
             </Dropdown>
           </Nav>
         </Container>
       </Navbar>
 
-      {/* Login and Registration Modals */}
+      {/* 🔐 Auth Modal */}
       <AuthModal
-        show={showLogin}
-        handleClose={() => setShowLogin(false)}
-        isLogin={true}
-        onSwitch={handleSwitchToRegister}
-      />
-      <AuthModal
-        show={showRegister}
-        handleClose={() => setShowRegister(false)}
-        isLogin={false}
-        onSwitch={handleSwitchToLogin}
+        show={showAuthModal}
+        handleClose={() => setShowAuthModal(false)}
+        isLogin={isLoginMode}
+        onSwitch={() => setIsLoginMode(!isLoginMode)}
+        onLoginSuccess={handleLoginSuccess}
       />
     </>
   );
