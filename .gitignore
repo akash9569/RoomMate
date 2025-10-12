@@ -1,0 +1,31 @@
+# Node modules
+node_modules/
+
+# Local env files
+server/.env
+client/.env
+
+# Logs
+logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+# Node modules
+node_modules/
+
+# Local env files
+server/.env
+client/.env
+
+# Vite build output
+client/dist/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# VSCode
+.vscode/

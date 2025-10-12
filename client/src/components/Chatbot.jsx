@@ -21,7 +21,9 @@ const Chatbot = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/ask", {
+      // Read backend URL from Vite env variable. Vite exposes variables that start with VITE_.
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const res = await fetch(`${API_URL}/api/ask`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: userInput }),

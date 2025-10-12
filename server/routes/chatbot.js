@@ -3,10 +3,22 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const router = express.Router();
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+// Use Node's process.env for server-side environment variables
+const API_KEY_Gemini = process.env.GEMINI_API_KEY || "";
+if (!API_KEY_Gemini) {
+  console.warn("⚠️  GEMINI_API_KEY is not set. Chatbot requests will fail until you set the key in server/.env.");
+}
+
+// Pass the API key value to the GoogleGenerativeAI client using the expected config shape.
+// The library expects an options object (for example: { apiKey: 'YOUR_KEY' }) instead of a raw string.
+const genAI = new GoogleGenerativeAI({ apiKey: API_KEY_Gemini });
 
 router.post("/ask", async (req, res) => {
   try {
+    if (!API_KEY_Gemini) {
+      // Fail fast for chat requests when the API key isn't configured
+      return res.status(500).json({ error: 'GEMINI_API_KEY not configured on the server.' });
+    }
     const { prompt } = req.body;
     const userPrompt = prompt || "Explain what is Artificial Intelligence in simple words.";
 

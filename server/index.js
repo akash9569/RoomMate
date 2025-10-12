@@ -1,10 +1,17 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import chatbotRoutes from "./routes/chatbot.js"; // ✅ Gemini route import
+// Load environment variables as early as possible. Use a dynamic import so dotenv
+// runs before we import other modules that might read process.env during their
+// top-level evaluation.
+await import('dotenv/config');
+
+const expressModule = await import('express');
+const corsModule = await import('cors');
+const chatbotRoutesModule = await import('./routes/chatbot.js'); // ✅ Gemini route import
+
+const express = expressModule.default;
+const cors = corsModule.default;
+const chatbotRoutes = chatbotRoutesModule.default;
 
 const app = express();
-dotenv.config();
 
 app.use(cors());
 app.use(express.json());
