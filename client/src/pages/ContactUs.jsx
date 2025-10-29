@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../components/NavbarComponent';
 import Footer from '../components/Footer';
+import emailjs from '@emailjs/browser';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -33,15 +34,43 @@ const ContactUs = () => {
     setTouched((prev) => ({ ...prev, [name]: true }));
   };
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (isFormValid) {
+  //     console.log('Form submitted:', formData);
+  //     alert("Message sent!");
+  //     setFormData({ name: '', email: '', phone: '', message: '' });
+  //     setTouched({ name: false, email: false, phone: false, message: false });
+  //   }
+  // };
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (isFormValid) {
-      console.log('Form submitted:', formData);
-      alert("Message sent!");
+  e.preventDefault();
+  if (isFormValid) {
+    // Send email using EmailJS
+    emailjs.send(
+      'service_hjdpa0k',       // 🔹 Replace with your EmailJS service ID
+      'template_47piang',      // 🔹 Replace with your template ID
+      {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+      },
+      'eZYNg9FnnEZ0hp7Gd'        // 🔹 Replace with your EmailJS public key
+    )
+    .then((response) => {
+      console.log('SUCCESS!', response.status, response.text);
+      alert("Message sent successfully!");
       setFormData({ name: '', email: '', phone: '', message: '' });
       setTouched({ name: false, email: false, phone: false, message: false });
-    }
-  };
+    })
+    .catch((err) => {
+      console.error('FAILED...', err);
+      alert("Failed to send message. Please try again.");
+    });
+  }
+};
+
 
   const inputStyle = (fieldName, isValid) => ({
     width: '100%',
