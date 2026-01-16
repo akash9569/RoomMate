@@ -7,7 +7,8 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   cursor: pointer;
-  position: relative; /* For the premium badge */
+  position: relative;
+  /* For the premium badge */
   background-color: #fff;
 }
 
@@ -17,11 +18,13 @@
 }
 
 .listing-card .row {
-  align-items: center; /* Vertically align image and content */
+  align-items: center;
+  /* Vertically align image and content */
 }
 
 .listing-img-container {
-  height: 180px; /* Fixed height for consistent image size */
+  height: 180px;
+  /* Fixed height for consistent image size */
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -32,7 +35,8 @@
 .listing-img-container img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Cover the container without distortion */
+  object-fit: cover;
+  /* Cover the container without distortion */
 }
 
 .listing-card .card-body {
@@ -56,7 +60,8 @@
 .listing-card .listing-price {
   font-size: 1.25rem;
   font-weight: bold;
-  color: #007bff; /* A prominent color for price */
+  color: #007bff;
+  /* A prominent color for price */
   margin-top: 10px;
 }
 
@@ -64,7 +69,8 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  background-color: #ffc107; /* Bootstrap yellow */
+  background-color: #ffc107;
+  /* Bootstrap yellow */
   color: #333;
   padding: 3px 8px;
   border-radius: 4px;
@@ -73,12 +79,29 @@
   z-index: 10;
 }
 
+/* Dark Mode Overrides for Listing Card */
+[data-bs-theme="dark"] .listing-card {
+  background-color: #2b3035;
+  border-color: #495057;
+}
 
+[data-bs-theme="dark"] .listing-card .card-title {
+  color: #f8f9fa;
+}
 
+[data-bs-theme="dark"] .listing-card .listing-type,
+[data-bs-theme="dark"] .listing-card .listing-description {
+  color: #adb5bd;
+}
 
+[data-bs-theme="dark"] .listing-img-container {
+  background-color: #343a40;
+}
 
-
-
+[data-bs-theme="dark"] .listing-card .listing-price {
+  color: #6ea8fe;
+  /* Lighter blue for dark mode */
+}
 
 
 /* --------------------------------------------------------------------------- */
@@ -87,42 +110,56 @@
 /* AllListingsPage.css */
 
 .listing-page-container {
-  padding-top: 20px; /* Space from navbar */
+  padding-top: 20px;
+  /* Space from navbar */
   padding-bottom: 20px;
 }
 
 .listing-cards-column {
   /* On large screens, this column takes 7 parts */
   /* On medium/small screens, it will take full width (col-md-12) */
-  padding-right: 25px; /* Space between cards and map */
+  padding-right: 25px;
+  /* Space between cards and map */
 }
 
 .map-column {
   /* On large screens, this column takes 5 parts */
   /* On medium/small screens, it will take full width (col-md-12) */
-  position: sticky; /* Keep map visible as user scrolls listings */
-  top: 80px; /* Adjust based on your navbar height */
-  height: calc(100vh - 100px); /* Fill remaining viewport height, adjust for footer */
-  overflow: hidden; /* Hide scrollbars if map content exceeds height */
-  padding-left: 0; /* Align map to edge if desired */
+  position: sticky;
+  /* Keep map visible as user scrolls listings */
+  top: 80px;
+  /* Adjust based on your navbar height */
+  height: calc(100vh - 100px);
+  /* Fill remaining viewport height, adjust for footer */
+  overflow: hidden;
+  /* Hide scrollbars if map content exceeds height */
+  padding-left: 0;
+  /* Align map to edge if desired */
 }
 
-@media (max-width: 991.98px) { /* Adjust for Bootstrap's lg breakpoint */
+@media (max-width: 991.98px) {
+
+  /* Adjust for Bootstrap's lg breakpoint */
   .listing-cards-column {
     padding-right: 15px;
     padding-left: 15px;
   }
+
   .map-column {
-    position: static; /* Remove sticky behavior on smaller screens */
-    height: 400px; /* Give the map a fixed height on smaller screens */
-    margin-top: 30px; /* Space between listings and map on small screens */
+    position: static;
+    /* Remove sticky behavior on smaller screens */
+    height: 400px;
+    /* Give the map a fixed height on smaller screens */
+    margin-top: 30px;
+    /* Space between listings and map on small screens */
     padding-left: 15px;
     padding-right: 15px;
   }
 }
 
 .search-bar-section {
-  background-color: #f8f9fa; /* Light background for search */
+  background-color: #f8f9fa;
+  /* Light background for search */
   padding: 15px 20px;
   border-radius: 8px;
   border: 1px solid #e9ecef;
@@ -171,14 +208,38 @@
 }
 
 .map-placeholder h3 {
-    margin-bottom: 10px;
-    color: #495057;
+  margin-bottom: 10px;
+  color: #495057;
 }
 
 .map-placeholder img {
-    max-width: 80%;
-    height: auto;
-    margin-top: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  max-width: 80%;
+  height: auto;
+  margin-top: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Mode Overrides for All Listings Page */
+[data-bs-theme="dark"] .search-bar-section {
+  background-color: #2b3035;
+  border-color: #495057;
+}
+
+[data-bs-theme="dark"] .results-count {
+  color: #adb5bd;
+}
+
+[data-bs-theme="dark"] .listings-header h2 {
+  color: #f8f9fa;
+}
+
+[data-bs-theme="dark"] .map-placeholder {
+  background-color: #2b3035;
+  border-color: #495057;
+  color: #adb5bd;
+}
+
+[data-bs-theme="dark"] .map-placeholder h3 {
+  color: #f8f9fa;
 }

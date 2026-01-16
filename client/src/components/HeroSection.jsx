@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BsSearch } from "react-icons/bs";
+import "./HeroSection.css";
 
 const HERO_IMAGE_URL =
   "https://plus.unsplash.com/premium_photo-1676823547752-1d24e8597047?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bGl2aW5nJTIwcm9vbXxlbnwwfHwwfHx8MA%3D%3D";
@@ -8,6 +11,8 @@ const HERO_IMAGE_URL =
 const HeroSection = () => {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+
+  const navigate = useNavigate();
 
   // Fetch suggestions from OpenStreetMap
   const handleSearch = async (e) => {
@@ -21,7 +26,7 @@ const HeroSection = () => {
 
     try {
       const res = await axios.get(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${value}&addressdetails=1&limit=5`
+        `https://nominatim.openstreetmap.org/search?format=json&q=${value}&addressdetails=1&limit=5&countrycodes=in`
       );
       setSuggestions(res.data);
     } catch (err) {
@@ -31,87 +36,68 @@ const HeroSection = () => {
 
   // Handle selecting a location
   const handleSelect = (place) => {
-    setQuery(place.display_name);
+    const locationName = place.display_name.split(',')[0].trim();
+    setQuery(locationName);
     setSuggestions([]);
-    console.log("📍 Selected:", place.display_name);
-    console.log("🧭 Coordinates:", place.lat, place.lon);
+    navigate(`/all-listings?location=${locationName}`);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && query) {
+      navigate(`/all-listings?location=${query}`);
+    }
   };
 
   return (
     <div
-      style={{
-        backgroundImage: `url('${HERO_IMAGE_URL}')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        minHeight: "100vh",
-        position: "relative",
-        display: "flex",
-        alignItems: "center",
-        textAlign: "center",
-        paddingTop: "60px",
-      }}
-      className="text-white p-5"
+      className="hero-section text-white"
+      style={{ backgroundImage: `url('${HERO_IMAGE_URL}')` }}
     >
-      {/* Overlay */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-          zIndex: 0,
-        }}
-      ></div>
+      <div className="hero-overlay"></div>
 
-      <Container style={{ zIndex: 1 }}>
-        <p className="mb-2 fs-5">
-          10000+ Rooms and Flatmates Available Now Across India
-        </p>
+      <Container className="hero-content">
+        <Row className="justify-content-center">
+          <Col lg={8} md={10}>
+            <h1 className="hero-title">
+              Find Your Perfect <br />
+              <span className="text-primary">RoomMate</span> Today
+            </h1>
+            <p className="hero-subtitle">
+              Join 10,000+ happy users finding rooms and roommates across India.
+              Simple, safe, and social.
+            </p>
 
-        <Row className="justify-content-center mb-5 mt-3">
-          <Col md={6}>
-            <Form className="position-relative">
-              <input
-                type="text"
-                placeholder="Search by Locality"
-                value={query}
-                onChange={handleSearch}
-                className="form-control py-3 px-4 rounded-pill shadow-lg border-0 text-center"
-                style={{ fontSize: "18px" }}
-              />
+            <div className="position-relative">
+              <div className="search-container d-flex align-items-center">
+                <BsSearch className="ms-3 text-white opacity-75" size={20} />
+                <input
+                  type="text"
+                  placeholder="Search by Locality (e.g., Koramangala, Bandra)"
+                  value={query}
+                  onChange={handleSearch}
+                  onKeyDown={handleKeyDown}
+                  className="hero-search-input form-control shadow-none"
+                />
+              </div>
 
               {/* Dropdown suggestions */}
               {suggestions.length > 0 && (
-                <ul
-                  className="list-group position-absolute w-100 mt-2"
-                  style={{
-                    maxHeight: "200px",
-                    overflowY: "auto",
-                    borderRadius: "15px",
-                    zIndex: 1000,
-                  }}
-                >
+                <div className="search-suggestions">
                   {suggestions.map((place) => (
-                    <li
+                    <div
                       key={place.place_id}
-                      className="list-group-item list-group-item-action"
+                      className="suggestion-item"
                       onClick={() => handleSelect(place)}
-                      style={{ cursor: "pointer" }}
                     >
-                      {place.display_name}
-                    </li>
+                      <div className="fw-bold">{place.display_name.split(',')[0]}</div>
+                      <small className="text-muted">{place.display_name}</small>
+                    </div>
                   ))}
-                </ul>
+                </div>
               )}
-            </Form>
+            </div>
           </Col>
         </Row>
-
-        <h1 className="display-4 fw-bold mt-5">
-          Find A Room / Roommate Now
-        </h1>
       </Container>
     </div>
   );

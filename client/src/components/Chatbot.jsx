@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaComments } from "react-icons/fa";
 import ReactMarkdown from "react-markdown";
+import "./Chatbot.css";
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,9 +30,15 @@ const Chatbot = () => {
 
       const data = await res.json();
 
+      let botReply = data.reply;
+      if (!botReply && data.error) {
+        botReply = `⚠️ ${data.error}`;
+        if (data.hint) botReply += `\n💡 ${data.hint}`;
+      }
+
       setMessages((prev) => [
         ...prev,
-        { sender: "bot", text: data.reply || "Sorry, I didn’t understand that 😅" },
+        { sender: "bot", text: botReply || "Sorry, I didn’t understand that 😅" },
       ]);
     } catch (error) {
       console.error("Chatbot API error:", error);
@@ -55,126 +62,40 @@ const Chatbot = () => {
     <>
       {/* Floating Chat Icon */}
       <div
+        className="chatbot-icon"
         onClick={() => setIsOpen(!isOpen)}
-        style={{
-          position: "fixed",
-          bottom: "25px",
-          right: "25px",
-          backgroundColor: "#000000b0",
-          color: "#fff",
-          borderRadius: "50%",
-          width: "60px",
-          height: "60px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-          boxShadow: "0 3px 10px rgba(0,0,0,0.3)",
-          zIndex: 9999,
-        }}
       >
         <FaComments size={28} />
       </div>
 
       {/* Chat Window */}
       {isOpen && (
-        <div
-          style={{
-            position: "fixed",
-            bottom: "90px",
-            right: "25px",
-            width: "320px",
-            height: "420px",
-            background: "#fff",
-            borderRadius: "12px",
-            boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
-            overflow: "hidden",
-            display: "flex",
-            flexDirection: "column",
-            zIndex: 9998,
-          }}
-        >
+        <div className="chatbot-window">
           {/* Header */}
-          <div
-            style={{
-              background: "#000000c9",
-              color: "white",
-              padding: "10px",
-              textAlign: "center",
-              fontWeight: "bold",
-            }}
-          >
+          <div className="chatbot-header">
             RoomMate Assistant 💬
           </div>
 
           {/* Messages Area */}
-          <div
-            style={{
-              flex: 1,
-              padding: "10px",
-              overflowY: "auto",
-              backgroundColor: "#f9f9f9",
-            }}
-          >
+          <div className="chatbot-messages">
             {messages.map((msg, index) => (
-              // <div
-              //   key={index}
-              //   style={{
-              //     marginBottom: "8px",
-              //     textAlign: msg.sender === "user" ? "right" : "left",
-              //   }}
-              // >
-              //   <span
-              //     style={{
-              //       display: "inline-block",
-              //       background:
-              //         msg.sender === "user" ? "#000000c9" : "#e4e6eb",
-              //       color: msg.sender === "user" ? "white" : "black",
-              //       borderRadius: "12px",
-              //       padding: "8px 12px",
-              //       maxWidth: "80%",
-              //       wordWrap: "break-word",
-              //     }}
-              //   >
-              //     {msg.text}
-              //   </span>
-              // </div>
               <div
-  key={index}
-  style={{
-    marginBottom: "8px",
-    textAlign: msg.sender === "user" ? "right" : "left",
-  }}
->
-  <span
-    style={{
-      display: "inline-block",
-      background: msg.sender === "user" ? "#000000c9" : "#e4e6eb",
-      color: msg.sender === "user" ? "white" : "black",
-      borderRadius: "12px",
-      padding: "8px 12px",
-      maxWidth: "80%",
-      wordWrap: "break-word",
-    }}
-  >
-    <ReactMarkdown>{msg.text}</ReactMarkdown>
-  </span>
-</div>
+                key={index}
+                className="message-container"
+                style={{ textAlign: msg.sender === "user" ? "right" : "left" }}
+              >
+                <span
+                  className={`message-bubble ${msg.sender === "user" ? "message-user" : "message-bot"}`}
+                >
+                  <ReactMarkdown>{msg.text}</ReactMarkdown>
+                </span>
+              </div>
             ))}
 
             {/* Loading bubble */}
             {loading && (
               <div style={{ textAlign: "left", marginTop: "5px" }}>
-                <span
-                  style={{
-                    display: "inline-block",
-                    background: "#e4e6eb",
-                    color: "#555",
-                    borderRadius: "12px",
-                    padding: "8px 12px",
-                    fontStyle: "italic",
-                  }}
-                >
+                <span className="loading-bubble">
                   Typing...
                 </span>
               </div>
@@ -182,36 +103,18 @@ const Chatbot = () => {
           </div>
 
           {/* Input Box */}
-          <div
-            style={{
-              display: "flex",
-              borderTop: "1px solid #ddd",
-              padding: "8px",
-              background: "#fff",
-            }}
-          >
+          <div className="chatbot-input-area">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyPress}
               placeholder="Type your message..."
-              style={{
-                flex: 1,
-                border: "none",
-                outline: "none",
-                padding: "6px",
-              }}
+              className="chatbot-input"
             />
             <button
               onClick={handleSend}
-              style={{
-                background: "#000000c9",
-                color: "white",
-                border: "none",
-                borderRadius: "6px",
-                padding: "6px 12px",
-              }}
+              className="chatbot-send-btn"
               disabled={loading}
             >
               Send

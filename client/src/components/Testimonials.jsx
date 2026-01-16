@@ -1,87 +1,109 @@
 import React from 'react';
 import './Testimonials.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useTheme } from '../context/ThemeContext';
+import { BsQuote, BsPatchCheckFill } from 'react-icons/bs';
 
 const testimonials = [
   {
     name: 'Manish Sharma',
-    location: 'Flat And Flatmates Bangalore',
+    location: 'Bangalore',
     rating: 4,
-    review: 'I Was Able To Rent My Apartment In Whitefield, Bangalore With The Help Of The Platform. Good Work Folks. Keep It Going',
+    review: 'I was able to rent my apartment in Whitefield, Bangalore with the help of the platform. Good work folks!',
   },
   {
-    name: 'Akash',
-    location: 'Flat And Flatmates Hyderabad',
+    name: 'Akash Singh',
+    location: 'Hyderabad',
     rating: 5,
-    review: 'I Was Able To Find A PG In HSR Layout With The Help Of FindMyRoom. Easy To Find PG And Coliving Spaces In Bangalore',
+    review: 'I was able to find a PG in HSR Layout with the help of FindMyRoom. Easy to find PG and Coliving spaces.',
   },
   {
     name: 'Rohit Yadav',
-    location: 'Flat And Flatmates Bangalore',
+    location: 'Bangalore',
     rating: 5,
-    review: 'Awesome Place To Find Short-Term And Long-Term Rentals At A Reasonable Price. No Brokage. Great Team!',
+    review: 'Awesome place to find short-term and long-term rentals at a reasonable price. No brokerage. Great team!',
   },
   {
     name: 'Pooja Deshmukh',
-    location: 'Flat And Flatmates Mumbai',
+    location: 'Mumbai',
     rating: 5,
-    review: 'Very Helpful Community. Easy To Find Roommates On This Platform',
+    review: 'Very helpful community. Easy to find roommates on this platform. Highly recommended!',
   },
   {
-    name: 'Rajamanickam Sekar',
-    location: 'Flat And Flatmates Pune',
+    name: 'Raj Sekar',
+    location: 'Pune',
     rating: 5,
-    review: 'Very Good Response. Easy To Find Roommates Or Tenants.',
+    review: 'Very good response. Easy to find roommates or tenants. The interface is smooth and quick.',
   },
   {
     name: 'Sumeet Sahu',
-    location: 'Flat And Flatmates Delhi',
+    location: 'Delhi',
     rating: 5,
-    review: 'Nice Page And Easy To Find A Flatmate',
+    review: 'Nice page and easy to find a flatmate. Saved me a lot of brokerage money.',
   },
   {
     name: 'Tanya Joshi',
-    location: 'Flat And Flatmates Pune',
+    location: 'Pune',
     rating: 4,
-    review: 'Good Options For People Who Are Looking For Flats Or Roommates',
+    review: 'Good options for people who are looking for flats or roommates. User verification is a plus.',
   },
   {
     name: 'Vishakha Singh',
-    location: 'Flat And Flatmates Ahmedabad',
+    location: 'Ahmedabad',
     rating: 4,
-    review: 'Better Way To Find Flat And Flatmates',
+    review: 'Better way to find flat and flatmates compared to other social media groups.',
   }
 ];
 
 const Testimonials = () => {
-  return (
-    <div className="testimonials-section py-5">
-      <div className="container">
-        <h2 className="text-center fw-bold mb-2">User Testimonials</h2>
-        <p className="text-center text-muted mb-4">
-          Our Users Really Love Us! Please Review Us Or Provide A Feedback Here
-        </p>
+  const { theme } = useTheme();
 
-        <div className="infinite-scroll-wrapper mx-auto">
+  return (
+    <div className={`testimonials-section py-5 ${theme === 'dark' ? 'bg-dark' : 'bg-light'}`}>
+      <div className="container">
+        <div className="text-center mb-5">
+          <h2 className="section-title display-5">User Testimonials</h2>
+          <p className={`section-subtitle ${theme === 'dark' ? 'text-light' : 'text-muted'}`}>
+            Join thousands of happy users who found their perfect home or roommate with us.
+          </p>
+        </div>
+
+        <div className="infinite-scroll-wrapper">
           <div className="scroll-track">
-            {[...testimonials, ...testimonials].map((testimonial, index) => (
-              <div className="card testimonial-card shadow-sm" key={index}>
-                <div className="card-body">
-                  <h6 className="card-title fw-bold">
-                    {testimonial.name}{' '}
-                    <span className="fw-normal">Reviewed</span>{' '}
-                    <strong>{testimonial.location}</strong>
-                  </h6>
-                  <div className="stars mb-2">
-                    {Array.from({ length: 5 }, (_, i) => (
-                      <i
-                        key={i}
-                        className={`fa-star fa ${i < testimonial.rating ? 'fas text-success' : 'far text-muted'}`}
-                      ></i>
-                    ))}
-                  </div>
-                  <p className="card-text small">{testimonial.review}</p>
+            {/* Duplicate array for seamless infinite scroll */}
+            {[...testimonials, ...testimonials, ...testimonials].map((testimonial, index) => (
+              <div key={index} className="testimonial-card">
+                <div className="quote-icon">
+                  <BsQuote />
                 </div>
+
+                <div className="user-info">
+                  <div className="user-avatar text-uppercase">
+                    {testimonial.name.charAt(0)}{testimonial.name.split(' ')[1] ? testimonial.name.split(' ')[1].charAt(0) : ''}
+                  </div>
+                  <div>
+                    <h6 className="fw-bold mb-0">
+                      {testimonial.name}
+                      <BsPatchCheckFill className="verified-badge" title="Verified User" />
+                    </h6>
+                    <small className={theme === 'dark' ? 'text-muted' : 'text-secondary'} style={{ fontSize: '0.8rem' }}>
+                      {testimonial.location}
+                    </small>
+                  </div>
+                </div>
+
+                <div className="star-rating mb-3">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <i
+                      key={i}
+                      className={`fa-star fa ${i < testimonial.rating ? 'fas text-warning' : 'far text-muted'}`}
+                    ></i>
+                  ))}
+                </div>
+
+                <p className="card-text">
+                  "{testimonial.review}"
+                </p>
               </div>
             ))}
           </div>

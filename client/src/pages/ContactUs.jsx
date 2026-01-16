@@ -1,197 +1,188 @@
 import React, { useState } from 'react';
-import Navbar from '../components/NavbarComponent';
+import { Container, Row, Col, Form, Button, Card, Alert } from 'react-bootstrap';
+import { BsEnvelope, BsTelephone, BsGeoAlt, BsSend } from 'react-icons/bs';
+import NavbarComponent from '../components/NavbarComponent';
 import Footer from '../components/Footer';
-import emailjs from '@emailjs/browser';
+import { useTheme } from '../context/ThemeContext';
+import './ContactUs.css';
 
 const ContactUs = () => {
+  const { theme } = useTheme();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     message: ''
   });
-
-  const [touched, setTouched] = useState({
-    name: false,
-    email: false,
-    phone: false,
-    message: false
-  });
-
-  const isFormValid =
-    formData.name.trim() &&
-    /^\S+@\S+\.\S+$/.test(formData.email) &&
-    /^\d{10}$/.test(formData.phone) &&
-    formData.message.trim();
+  const [status, setStatus] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleBlur = (e) => {
-    const { name } = e.target;
-    setTouched((prev) => ({ ...prev, [name]: true }));
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setStatus(null);
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (isFormValid) {
-  //     console.log('Form submitted:', formData);
-  //     alert("Message sent!");
-  //     setFormData({ name: '', email: '', phone: '', message: '' });
-  //     setTouched({ name: false, email: false, phone: false, message: false });
-  //   }
-  // };
-  const handleSubmit = (e) => {
-  e.preventDefault();
-  if (isFormValid) {
-    // Send email using EmailJS
-    emailjs.send(
-      'service_hjdpa0k',       // 🔹 Replace with your EmailJS service ID
-      'template_47piang',      // 🔹 Replace with your template ID
-      {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        message: formData.message,
-      },
-      'eZYNg9FnnEZ0hp7Gd'        // 🔹 Replace with your EmailJS public key
-    )
-    .then((response) => {
-      console.log('SUCCESS!', response.status, response.text);
-      alert("Message sent successfully!");
-      setFormData({ name: '', email: '', phone: '', message: '' });
-      setTouched({ name: false, email: false, phone: false, message: false });
-    })
-    .catch((err) => {
-      console.error('FAILED...', err);
-      alert("Failed to send message. Please try again.");
-    });
-  }
-};
+    try {
+      const response = await fetch("http://localhost:3000/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
+      const data = await response.json();
 
-  const inputStyle = (fieldName, isValid) => ({
-    width: '100%',
-    padding: '10px',
-    borderRadius: '6px',
-    border: touched[fieldName]
-      ? isValid
-        ? '1.5px solid #4CAF50' // Green border if valid
-        : '1.5px solid #FF4D4F' // Red border if invalid
-      : '1px solid #ccc',
-    outline: 'none',
-    transition: 'border-color 0.3s',
-    boxSizing: 'border-box'
-  });
-
-  const hintTextStyle = {
-    fontSize: '12px',
-    marginTop: '5px',
-    color: '#FF4D4F'
+      if (response.ok) {
+        setStatus({ type: 'success', msg: 'Message sent successfully! We will get back to you soon.' });
+        setFormData({ name: '', email: '', phone: '', message: '' });
+      } else {
+        setStatus({ type: 'danger', msg: data.message || 'Failed to send message. Please try again later.' });
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      setStatus({ type: 'danger', msg: 'Failed to connect to server. Please try again later.' });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <>
-      <Navbar />
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '150px', marginBottom: '50px' }}>
-        <div style={{
-          maxWidth: '600px',
-          width: '100%',
-          backgroundColor: '#fff',
-          padding: '30px',
-          borderRadius: '12px',
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
-        }}>
-          <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Contact Us</h2>
-          <form onSubmit={handleSubmit} noValidate>
-            {/* Name Field */}
-            <div style={{ marginBottom: '20px' }}>
-              <label>Name:</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                style={inputStyle("name", formData.name.trim())}
-              />
-              {touched.name && !formData.name.trim() && (
-                <div style={hintTextStyle}>Please enter your name.</div>
-              )}
-            </div>
+      <NavbarComponent />
 
-            {/* Email Field */}
-            <div style={{ marginBottom: '20px' }}>
-              <label>Email:</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                style={inputStyle("email", /^\S+@\S+\.\S+$/.test(formData.email))}
-              />
-              {touched.email && !/^\S+@\S+\.\S+$/.test(formData.email) && (
-                <div style={hintTextStyle}>Enter a valid email address.</div>
-              )}
-            </div>
+      <div className={`contact-container ${theme === 'dark' ? 'dark-mode' : ''}`}>
+        <Container>
+          <div className="contact-header-text text-center mb-5">
+            <h1 className="display-4">Contact Us</h1>
+            <p className="lead">We'd love to hear from you. Get in touch with our team.</p>
+          </div>
 
-            {/* Phone Field */}
-            <div style={{ marginBottom: '20px' }}>
-              <label>Phone Number:</label>
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                placeholder="10-digit number"
-                style={inputStyle("phone", /^\d{10}$/.test(formData.phone))}
-              />
-              {touched.phone && !/^\d{10}$/.test(formData.phone) && (
-                <div style={hintTextStyle}>Phone must be 10 digits.</div>
-              )}
-            </div>
+          <Row className="g-4 g-lg-5 align-items-start">
+            {/* Contact Info */}
+            <Col lg={5}>
+              <div className="contact-left-section pe-lg-4">
+                <h2>Get in Touch</h2>
+                <p className="lead-text">
+                  Have questions about posting a listing or finding a room?
+                  Our support team is here to help you 24/7.
+                </p>
 
-            {/* Message Field */}
-            <div style={{ marginBottom: '20px' }}>
-              <label>Message:</label>
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                rows="5"
-                style={inputStyle("message", formData.message.trim())}
-              />
-              {touched.message && !formData.message.trim() && (
-                <div style={hintTextStyle}>Please write your message.</div>
-              )}
-            </div>
+                <div className="contact-info-item">
+                  <div className="contact-icon-wrapper">
+                    <BsGeoAlt />
+                  </div>
+                  <div>
+                    <h5 className="contact-label">Office Location</h5>
+                    <p className="contact-value">123 Innovation Drive, Tech City, TC 90210</p>
+                  </div>
+                </div>
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={!isFormValid}
-              style={{
-                backgroundColor: isFormValid ? '#007bff' : '#e0e0e0',
-                color: isFormValid ? 'white' : '#999',
-                padding: '12px 20px',
-                border: 'none',
-                borderRadius: '6px',
-                fontSize: '16px',
-                cursor: isFormValid ? 'pointer' : 'not-allowed',
-                width: '100%',
-                transition: 'background-color 0.3s ease'
-              }}
-            >
-              Send Message
-            </button>
-          </form>
-        </div>
+                <div className="contact-info-item">
+                  <div className="contact-icon-wrapper">
+                    <BsTelephone />
+                  </div>
+                  <div>
+                    <h5 className="contact-label">Phone Number</h5>
+                    <p className="contact-value">+1 (555) 123-4567</p>
+                  </div>
+                </div>
+
+                <div className="contact-info-item">
+                  <div className="contact-icon-wrapper">
+                    <BsEnvelope />
+                  </div>
+                  <div>
+                    <h5 className="contact-label">Email Address</h5>
+                    <p className="contact-value">support@roommate.com</p>
+                  </div>
+                </div>
+              </div>
+            </Col>
+
+            {/* Contact Form */}
+            <Col lg={7}>
+              <Card className="glass-card border-0">
+                <Card.Body className="p-4 p-md-5">
+                  <h3 className="contact-form-title">Send us a Message</h3>
+
+                  {status && <Alert variant={status.type}>{status.msg}</Alert>}
+
+                  <Form onSubmit={handleSubmit}>
+                    <Row>
+                      <Col md={6}>
+                        <Form.Group className="mb-3">
+                          <Form.Label>Your Name</Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="John Doe"
+                            required
+                            className="contact-form-control"
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Group className="mb-3">
+                          <Form.Label>Email Address</Form.Label>
+                          <Form.Control
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            placeholder="john@example.com"
+                            required
+                            className="contact-form-control"
+                          />
+                        </Form.Group>
+                      </Col>
+                    </Row>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label>Phone Number</Form.Label>
+                      <Form.Control
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        placeholder="+1 (555) 000-0000"
+                        className="contact-form-control"
+                      />
+                    </Form.Group>
+
+                    <Form.Group className="mb-4">
+                      <Form.Label>Message</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={5}
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        placeholder="How can we help you?"
+                        required
+                        className="contact-form-control"
+                      />
+                    </Form.Group>
+
+                    <div className="d-grid">
+                      <Button variant="primary" size="lg" type="submit" disabled={loading} className="contact-submit-btn">
+                        {loading ? 'Sending...' : <><BsSend className="me-2" /> Send Message</>}
+                      </Button>
+                    </div>
+                  </Form>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </div>
+
       <Footer />
     </>
   );
