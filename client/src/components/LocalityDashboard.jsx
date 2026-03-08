@@ -10,8 +10,8 @@ const LocalityDashboard = ({ location }) => {
     const livability = 88;
 
     return (
-        <Card className="glass-card border-0 mb-4">
-            <Card.Body className="p-4">
+        <div className="glass-card border-0 mb-4">
+            <div className="p-4">
                 <h5 className="fw-bold mb-4">
                     <BsGraphUp className="me-2 text-primary" /> Locality Intelligence: <span className="text-gradient">{location}</span>
                 </h5>
@@ -19,7 +19,7 @@ const LocalityDashboard = ({ location }) => {
                 <Row className="g-4">
                     {/* Safety Score */}
                     <Col md={6} lg={3}>
-                        <div className="p-3 rounded bg-white bg-opacity-5 h-100 border border-white border-opacity-10">
+                        <div className="p-3 rounded bg-secondary bg-opacity-10 h-100 border border-secondary border-opacity-25">
                             <div className="d-flex justify-content-between align-items-center mb-2">
                                 <small className="text-muted text-uppercase fw-bold">Night Safety</small>
                                 <BsShieldCheck className="text-success fs-5" />
@@ -31,7 +31,7 @@ const LocalityDashboard = ({ location }) => {
 
                     {/* Noise Level */}
                     <Col md={6} lg={3}>
-                        <div className="p-3 rounded bg-white bg-opacity-5 h-100 border border-white border-opacity-10">
+                        <div className="p-3 rounded bg-secondary bg-opacity-10 h-100 border border-secondary border-opacity-25">
                             <div className="d-flex justify-content-between align-items-center mb-2">
                                 <small className="text-muted text-uppercase fw-bold">Noise Level</small>
                                 <BsSoundwave className="text-info fs-5" />
@@ -43,7 +43,7 @@ const LocalityDashboard = ({ location }) => {
 
                     {/* Connectivity */}
                     <Col md={6} lg={3}>
-                        <div className="p-3 rounded bg-white bg-opacity-5 h-100 border border-white border-opacity-10">
+                        <div className="p-3 rounded bg-secondary bg-opacity-10 h-100 border border-secondary border-opacity-25">
                             <div className="d-flex justify-content-between align-items-center mb-2">
                                 <small className="text-muted text-uppercase fw-bold">Connectivity</small>
                                 <BsTrainFront className="text-warning fs-5" />
@@ -55,7 +55,7 @@ const LocalityDashboard = ({ location }) => {
 
                     {/* Livability */}
                     <Col md={6} lg={3}>
-                        <div className="p-3 rounded bg-white bg-opacity-5 h-100 border border-white border-opacity-10">
+                        <div className="p-3 rounded bg-secondary bg-opacity-10 h-100 border border-secondary border-opacity-25">
                             <div className="d-flex justify-content-between align-items-center mb-2">
                                 <small className="text-muted text-uppercase fw-bold">Livability Index</small>
                                 <BsGraphUp className="text-primary fs-5" />
@@ -67,7 +67,7 @@ const LocalityDashboard = ({ location }) => {
                 </Row>
 
                 {/* Safety Insights */}
-                <div className="mt-4 pt-4 border-top border-white border-opacity-10">
+                <div className="mt-4 pt-4 border-top border-secondary border-opacity-25">
                     <h6 className="fw-bold mb-3">Safety & Neighbourhood Insights</h6>
                     <div className="d-flex flex-wrap gap-3">
                         <Badge bg="dark" className="p-2 border border-secondary fw-normal d-flex align-items-center gap-2">
@@ -81,8 +81,8 @@ const LocalityDashboard = ({ location }) => {
                         </Badge>
                     </div>
                 </div>
-            </Card.Body>
-        </Card>
+            </div>
+        </div>
     );
 };
 

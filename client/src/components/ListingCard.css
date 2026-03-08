@@ -1,15 +1,16 @@
 /* ListingCard.css */
 
 .listing-card {
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--bs-border-color, #e0e0e0);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   cursor: pointer;
   position: relative;
-  /* For the premium badge */
-  background-color: #fff;
+  background-color: var(--bs-body-bg, #fff);
+  height: auto !important;
+  min-height: min-content;
 }
 
 .listing-card:hover {
@@ -23,8 +24,8 @@
 }
 
 .listing-img-container {
-  height: 180px;
-  /* Fixed height for consistent image size */
+  height: 110px;
+  /* Very compact thumbnail height for cards */
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -81,26 +82,25 @@
 
 /* Dark Mode Overrides for Listing Card */
 [data-bs-theme="dark"] .listing-card {
-  background-color: #2b3035;
-  border-color: #495057;
+  background-color: #1a1e21 !important;
+  border-color: #2a2a2a !important;
 }
 
 [data-bs-theme="dark"] .listing-card .card-title {
-  color: #f8f9fa;
+  color: #f8f9fa !important;
 }
 
 [data-bs-theme="dark"] .listing-card .listing-type,
-[data-bs-theme="dark"] .listing-card .listing-description {
-  color: #adb5bd;
+[data-bs-theme="dark"] .listing-card .text-muted {
+  color: #adb5bd !important;
 }
 
 [data-bs-theme="dark"] .listing-img-container {
-  background-color: #343a40;
+  background-color: #2b3035 !important;
 }
 
 [data-bs-theme="dark"] .listing-card .listing-price {
-  color: #6ea8fe;
-  /* Lighter blue for dark mode */
+  color: #6ea8fe !important;
 }
 
 

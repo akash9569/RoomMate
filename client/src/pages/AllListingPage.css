@@ -71,7 +71,7 @@
 
 /* Dark Mode Overrides */
 [data-bs-theme="dark"] .listing-cards-column {
-    background-color: #212529;
+    background-color: var(--bs-body-bg, #000) !important;
 }
 
 [data-bs-theme="dark"] .listing-cards-column::-webkit-scrollbar-track {

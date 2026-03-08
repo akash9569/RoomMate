@@ -78,7 +78,7 @@ const ContactUs = () => {
                   </div>
                   <div>
                     <h5 className="contact-label">Office Location</h5>
-                    <p className="contact-value">123 Innovation Drive, Tech City, TC 90210</p>
+                    <p className="contact-value">infosysy foundation bengaluru</p>
                   </div>
                 </div>
 
@@ -88,17 +88,21 @@ const ContactUs = () => {
                   </div>
                   <div>
                     <h5 className="contact-label">Phone Number</h5>
-                    <p className="contact-value">+1 (555) 123-4567</p>
+                    <p className="contact-value">9569581233</p>
                   </div>
                 </div>
 
-                <div className="contact-info-item">
+                <div
+                  className="contact-info-item"
+                  onClick={() => window.location.href = 'mailto:room25mate@gmail.com'}
+                  style={{ cursor: 'pointer' }}
+                >
                   <div className="contact-icon-wrapper">
                     <BsEnvelope />
                   </div>
                   <div>
                     <h5 className="contact-label">Email Address</h5>
-                    <p className="contact-value">support@roommate.com</p>
+                    <p className="contact-value">room25mate@gmail.com</p>
                   </div>
                 </div>
               </div>

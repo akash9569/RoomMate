@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import "bootstrap/dist/css/bootstrap.min.css";
+import './index.css'; // Global custom styles, including dark mode overwrites
 import App from './App.jsx'
 
 import ErrorBoundary from './components/ErrorBoundary';

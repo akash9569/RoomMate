@@ -4,6 +4,8 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import AuthModal from "./AuthModal";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
+import { FiUser, FiSettings, FiPlusCircle, FiLogOut, FiChevronDown } from "react-icons/fi";
+import "./NavbarComponent.css";
 
 const NavbarComponent = () => {
   const navigate = useNavigate();
@@ -120,15 +122,15 @@ const NavbarComponent = () => {
               </Nav.Link>
 
               {isAuthenticated ? (
-                <Dropdown align="end">
+                <Dropdown align="end" className="profile-dropdown">
                   <Dropdown.Toggle
-                    variant={theme === "dark" || (isHomePage && !scrolled) ? "outline-light" : "outline-dark"}
+                    variant="link"
                     id="dropdown-basic"
-                    className="d-flex align-items-center"
+                    className="d-flex align-items-center text-decoration-none border-0"
                   >
                     <div
-                      className="rounded-circle bg-primary d-flex align-items-center justify-content-center text-white fw-bold me-2 overflow-hidden"
-                      style={{ width: "30px", height: "30px", fontSize: "14px" }}
+                      className="avatar-container rounded-circle bg-primary d-flex align-items-center justify-content-center text-white fw-bold me-2 overflow-hidden"
+                      style={{ width: "35px", height: "35px", fontSize: "14px" }}
                     >
                       {user?.profilePicture ? (
                         <img
@@ -147,27 +149,33 @@ const NavbarComponent = () => {
                       ) : (
                         user?.name?.charAt(0).toUpperCase() || "U"
                       )}
-                      {/* Fallback for when image fails to load */}
                       <span style={{ display: "none" }}>
                         {user?.name?.charAt(0).toUpperCase() || "U"}
                       </span>
                     </div>
-                    {user?.name || "User"}
+                    <span className={`me-2 fw-medium ${getLinkColor()}`}>
+                      {user?.name?.split(' ')[0] || "User"}
+                    </span>
+                    <FiChevronDown className={getLinkColor()} style={{ fontSize: "0.8rem", opacity: 0.7 }} />
                   </Dropdown.Toggle>
 
-                  <Dropdown.Menu>
+                  <Dropdown.Menu className="profile-dropdown-menu">
+                    <div className="profile-menu-header">
+                      <span>Signed in as</span>
+                      <h6>{user?.name || "User"}</h6>
+                    </div>
                     <Dropdown.Item onClick={() => handleNavClick("/profile")}>
-                      Profile
+                      <FiUser /> Profile
                     </Dropdown.Item>
                     <Dropdown.Item onClick={() => handleNavClick("/postlisting")}>
-                      Post a Listing
+                      <FiPlusCircle /> Post a Listing
                     </Dropdown.Item>
                     <Dropdown.Item onClick={() => handleNavClick("/settings")}>
-                      Settings
+                      <FiSettings /> Settings
                     </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item onClick={handleLogout} className="text-danger">
-                      Logout
+                      <FiLogOut /> Logout
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>

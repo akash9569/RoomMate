@@ -27,7 +27,7 @@ const listings = [
   },
   {
     title: "Entire House",
-    img: "https://houzone.com/wp-content/uploads/2023/10/2-bedroom-small-house-design-as-per-vastu-customized-house-design-order-online-indiahousedesign-houzone.jpg",
+    img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   },
 ];
 

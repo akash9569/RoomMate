@@ -18,7 +18,7 @@ const ListingCard = ({ listing }) => {
   };
 
   return (
-    <div className="glass-card h-100 position-relative overflow-hidden group" onClick={handleCardClick} style={{ cursor: 'pointer', transition: 'transform 0.3s ease' }}>
+    <div className="glass-card position-relative overflow-hidden group mb-4" onClick={handleCardClick} style={{ cursor: 'pointer', transition: 'transform 0.3s ease' }}>
       {/* Match Score Badge */}
       <div className="position-absolute top-0 start-0 m-3 z-2">
         <div className="badge-neon rounded-pill px-3 py-2 d-flex align-items-center gap-2 backdrop-blur-md">
@@ -49,7 +49,7 @@ const ListingCard = ({ listing }) => {
           loading="lazy"
           onError={handleImageError}
         />
-        <div className="position-absolute bottom-0 start-0 w-100 p-3 bg-gradient-to-t from-black/80 to-transparent">
+        <div className="position-absolute bottom-0 start-0 w-100 p-3 pt-4" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)' }}>
           <h5 className="text-white mb-1 text-truncate fw-bold">{listing.title}</h5>
           <div className="d-flex align-items-center text-white-50 small">
             <BsGeoAlt className="me-1" /> {listing.location}

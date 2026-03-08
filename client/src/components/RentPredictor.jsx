@@ -9,8 +9,8 @@ const RentPredictor = ({ currentRent, location }) => {
     const isGoodDeal = currentRent <= fairRent;
 
     return (
-        <Card className="glass-card border-0 mb-4">
-            <Card.Body className="p-4">
+        <div className="glass-card border-0 mb-4">
+            <div className="p-4">
                 <div className="d-flex justify-content-between align-items-start mb-4">
                     <div>
                         <h5 className="fw-bold mb-1">
@@ -33,7 +33,7 @@ const RentPredictor = ({ currentRent, location }) => {
 
                 <Row className="align-items-center g-4">
                     <Col md={5}>
-                        <div className="text-center p-3 rounded bg-white bg-opacity-5 border border-white border-opacity-10">
+                        <div className="text-center p-3 rounded" style={{ backgroundColor: 'var(--bs-tertiary-bg)' }}>
                             <small className="text-muted text-uppercase fw-bold">Predicted Fair Rent</small>
                             <h2 className="text-success fw-bold display-6 my-2">₹{fairRent.toLocaleString()}</h2>
                             <small className="text-muted">Range: ₹{(fairRent - 1000).toLocaleString()} - ₹{(fairRent + 1000).toLocaleString()}</small>
@@ -67,8 +67,8 @@ const RentPredictor = ({ currentRent, location }) => {
                         </div>
                     </Col>
                 </Row>
-            </Card.Body>
-        </Card>
+            </div>
+        </div>
     );
 };
 

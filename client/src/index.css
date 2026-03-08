@@ -16,17 +16,21 @@
 }
 
 [data-bs-theme="dark"] {
-    --bg-dark: #0f172a;
-    /* Slate 900 - Richer dark */
-    --bg-card: rgba(30, 41, 59, 0.7);
-    /* Slate 800 with opacity */
+    --bg-dark: #000000;
+    --bg-card: rgba(0, 0, 0, 0.8);
     --text-light: #f1f5f9;
     --text-dim: #94a3b8;
-    --border-glass: rgba(255, 255, 255, 0.08);
-    --bs-body-bg: #0f172a;
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --bs-body-bg: #000000;
     --bs-body-color: #e2e8f0;
-    --heading-color: #f8fafc;
-    --card-bg-hover: rgba(51, 65, 85, 0.8);
+    --heading-color: #ffffff;
+    --card-bg-hover: rgba(20, 20, 20, 1);
+}
+
+[data-bs-theme="dark"] .glass-card {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    border: 1px solid #333 !important;
 }
 
 [data-bs-theme="light"] {

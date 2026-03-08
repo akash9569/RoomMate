@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Footer.css';
 import { useTheme } from '../context/ThemeContext';
@@ -14,14 +15,14 @@ const Footer = () => {
           <div className="col-md-3 mb-4">
             <h6 className="text-uppercase mb-3">Top Cities</h6>
             <ul className="list-unstyled">
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Lucknow</a></li>
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Bangalore</a></li>
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Pune</a></li>
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Mumbai</a></li>
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Hyderabad</a></li>
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Ahmedabad</a></li>
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Delhi</a></li>
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Noida</a></li>
+              <li><Link to="/all-listings?location=Lucknow" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Lucknow</Link></li>
+              <li><Link to="/all-listings?location=Bangalore" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Bangalore</Link></li>
+              <li><Link to="/all-listings?location=Pune" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Pune</Link></li>
+              <li><Link to="/all-listings?location=Mumbai" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Mumbai</Link></li>
+              <li><Link to="/all-listings?location=Hyderabad" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Hyderabad</Link></li>
+              <li><Link to="/all-listings?location=Ahmedabad" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Ahmedabad</Link></li>
+              <li><Link to="/all-listings?location=Delhi" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Delhi</Link></li>
+              <li><Link to="/all-listings?location=Noida" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Noida</Link></li>
             </ul>
           </div>
 
@@ -29,14 +30,14 @@ const Footer = () => {
           <div className="col-md-3 mb-4">
             <h6 className="text-uppercase mb-3">Communities</h6>
             <ul className="list-unstyled">
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Flat And Flatmates Bangalore</a></li>
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Flat And Flatmates Pune</a></li>
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Flat And Flatmates Mumbai</a></li>
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Flat And Flatmates Hyderabad</a></li>
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Flat And Flatmates Ahmedabad</a></li>
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Flat And Flatmates Delhi</a></li>
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Flat And Flatmates Noida</a></li>
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Flat And Flatmates Gurgaon</a></li>
+              <li><Link to="/all-listings?location=Bangalore" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Flat And Flatmates Bangalore</Link></li>
+              <li><Link to="/all-listings?location=Pune" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Flat And Flatmates Pune</Link></li>
+              <li><Link to="/all-listings?location=Mumbai" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Flat And Flatmates Mumbai</Link></li>
+              <li><Link to="/all-listings?location=Hyderabad" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Flat And Flatmates Hyderabad</Link></li>
+              <li><Link to="/all-listings?location=Ahmedabad" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Flat And Flatmates Ahmedabad</Link></li>
+              <li><Link to="/all-listings?location=Delhi" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Flat And Flatmates Delhi</Link></li>
+              <li><Link to="/all-listings?location=Noida" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Flat And Flatmates Noida</Link></li>
+              <li><Link to="/all-listings?location=Gurgaon" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Flat And Flatmates Gurgaon</Link></li>
             </ul>
           </div>
 
@@ -44,11 +45,11 @@ const Footer = () => {
           <div className="col-md-3 mb-4">
             <h6 className="text-uppercase mb-3">Services</h6>
             <ul className="list-unstyled">
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Find A Roommate</a></li>
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Advertise A Room</a></li>
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Post A Room Wanted Ad</a></li>
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Advertise A Full Apartment</a></li>
-              <li><a href="#" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Flat And Flatmates Communities</a></li>
+              <li><Link to="/all-listings?type=Room" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Find A Roommate</Link></li>
+              <li><Link to="/postlisting" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Advertise A Room</Link></li>
+              <li><Link to="/postlisting" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Post A Room Wanted Ad</Link></li>
+              <li><Link to="/postlisting" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Advertise A Full Apartment</Link></li>
+              <li><Link to="/all-listings" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Flat And Flatmates Communities</Link></li>
             </ul>
           </div>
 
@@ -56,10 +57,10 @@ const Footer = () => {
           <div className="col-md-3 mb-4">
             <h6 className="text-uppercase mb-3">Company</h6>
             <ul className="list-unstyled">
-              <li><a href="/contactus" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Contact Us</a></li>
-              <li><a href="/termsofuse" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Terms Of Use</a></li>
-              <li><a href="/privacy&policy" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Privacy Policy</a></li>
-              <li><a href="/refund" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Refund Policy</a></li>
+              <li><Link to="/contactus" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Contact Us</Link></li>
+              <li><Link to="/termsofuse" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Terms Of Use</Link></li>
+              <li><Link to="/privacy&policy" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Privacy Policy</Link></li>
+              <li><Link to="/refund" className={theme === 'dark' ? 'text-light' : 'text-dark'}>Refund Policy</Link></li>
             </ul>
           </div>
         </div>

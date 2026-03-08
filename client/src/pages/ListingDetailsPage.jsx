@@ -378,12 +378,12 @@ const ListingDetailsPage = () => {
                         </div>
 
                         {/* Compatibility Analysis Widget */}
-                        <Card className="glass-card border-0 mb-4">
-                            <Card.Body className="p-4">
+                        <div className="glass-card border-0 mb-4">
+                            <div className="p-4">
                                 <h5 className="fw-bold mb-3"><BsCheckCircle className="me-2 text-primary" /> Compatibility Analysis</h5>
                                 <Row className="g-3">
                                     <Col md={6}>
-                                        <div className="p-3 rounded bg-white bg-opacity-10">
+                                        <div className="p-3 rounded bg-secondary bg-opacity-10">
                                             <small className="text-muted text-uppercase fw-bold">Lifestyle Match</small>
                                             <div className="d-flex align-items-center mt-2">
                                                 <div className="progress flex-grow-1" style={{ height: '6px' }}>
@@ -395,7 +395,7 @@ const ListingDetailsPage = () => {
                                         </div>
                                     </Col>
                                     <Col md={6}>
-                                        <div className="p-3 rounded bg-white bg-opacity-10">
+                                        <div className="p-3 rounded bg-secondary bg-opacity-10">
                                             <small className="text-muted text-uppercase fw-bold">Budget Fit</small>
                                             <div className="d-flex align-items-center mt-2">
                                                 <div className="progress flex-grow-1" style={{ height: '6px' }}>
@@ -407,37 +407,37 @@ const ListingDetailsPage = () => {
                                         </div>
                                     </Col>
                                 </Row>
-                            </Card.Body>
-                        </Card>
+                            </div>
+                        </div>
 
-                        <Card className="glass-card border-0 mb-4">
-                            <Card.Body className="p-4">
+                        <div className="glass-card border-0 mb-4">
+                            <div className="p-4">
                                 <h5 className="fw-bold mb-3">Description</h5>
                                 <p className="text-muted" style={{ whiteSpace: "pre-line", lineHeight: '1.8' }}>
                                     {listing.description}
                                 </p>
                                 {isOwnerOrAdmin && listing.aadhar && (
-                                    <div className="mt-3 pt-3 border-top border-white border-opacity-10">
+                                    <div className="mt-3 pt-3 border-top border-secondary border-opacity-25">
                                         <h6 className="fw-bold">Aadhar Number (Private)</h6>
                                         <p className="text-muted mb-0">{listing.aadhar}</p>
                                     </div>
                                 )}
-                            </Card.Body>
-                        </Card>
+                            </div>
+                        </div>
 
-                        <Card className="glass-card border-0 mb-4">
-                            <Card.Body className="p-4">
+                        <div className="glass-card border-0 mb-4">
+                            <div className="p-4">
                                 <h5 className="fw-bold mb-3">Amenities</h5>
                                 <div className="d-flex flex-wrap gap-2">
                                     {listing.amenities.map((amenity, index) => (
-                                        <Badge key={index} bg="dark" text="light" className="p-2 border border-secondary fw-normal">
+                                        <Badge key={index} bg="secondary" text="light" className="p-2 border border-secondary fw-normal">
                                             <BsCheckCircle className="me-1 text-primary" /> {amenity}
                                         </Badge>
                                     ))}
                                     {listing.amenities.length === 0 && <span className="text-muted">No amenities listed</span>}
                                 </div>
-                            </Card.Body>
-                        </Card>
+                            </div>
+                        </div>
 
                         {/* Phase 2: Intelligence Dashboards */}
                         <RentPredictor currentRent={listing.price} location={listing.location} />
@@ -446,8 +446,8 @@ const ListingDetailsPage = () => {
 
                     {/* Right Column: Price and Contact */}
                     <Col lg={4}>
-                        <Card className="glass-card border-0 sticky-top" style={{ top: "100px" }}>
-                            <Card.Body className="p-4">
+                        <div className="glass-card border-0 sticky-top" style={{ top: "100px" }}>
+                            <div className="p-4">
                                 <div className="mb-4">
                                     <h6 className="text-muted text-uppercase small fw-bold">Rent per month</h6>
                                     <h2 className="fw-bold display-6">₹{listing.price.toLocaleString()}</h2>
@@ -531,8 +531,8 @@ const ListingDetailsPage = () => {
                                         <small className="text-primary">Verified Owner</small>
                                     </div>
                                 </div>
-                            </Card.Body>
-                        </Card>
+                            </div>
+                        </div>
                     </Col>
                 </Row>
             </Container>
