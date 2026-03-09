@@ -4,7 +4,7 @@ import { Container, Row, Col, Card, Button, Nav, Tab, Badge, Form, Alert, Spinne
 import NavbarComponent from "../components/NavbarComponent";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
-import { BsPencilSquare, BsGear, BsGeoAlt, BsEnvelope, BsPhone, BsSave, BsXCircle, BsCardHeading, BsPlusLg, BsZoomIn, BsZoomOut } from "react-icons/bs";
+import { BsPencilSquare, BsGear, BsGeoAlt, BsEnvelope, BsPhone, BsSave, BsXCircle, BsCardHeading, BsPlusLg, BsZoomIn, BsZoomOut, BsShieldCheck, BsPersonBadge, BsCalendarCheck, BsClock, BsHeart, BsBell, BsEnvelopeCheck, BsPatchCheckFill, BsPatchExclamation, BsBarChart, BsStarFill, BsHouseDoor, BsPeopleFill } from "react-icons/bs";
 import ListingCard from "../components/ListingCard"; // Import ListingCard
 import { useTheme } from "../context/ThemeContext";
 import "./ProfilePage.css";
@@ -190,13 +190,18 @@ const ProfilePage = () => {
     if (!user) return null;
 
     return (
-        <>
+        <div className={`profile-page-wrapper ${theme === 'dark' ? 'bg-dark' : 'bg-light'} min-vh-100 pb-5`}>
             <NavbarComponent />
-            <Container className={`py-5 mt-5 pt-5 ${theme === 'dark' ? 'text-light' : ''}`}> {/* Increased top margin and padding */}
+
+            {/* Full Width Cover Section */}
+            <div className="cover-image-container">
+                <div className="cover-image"></div>
+            </div>
+
+            <Container className={`profile-content-container ${theme === 'dark' ? 'text-light' : ''}`}>
                 {/* Header Section */}
-                <div className="profile-header">
-                    <div className="cover-image"></div>
-                    <div className="profile-avatar-container">
+                <div className="profile-header-info">
+                    <div className="profile-avatar-wrapper shadow">
                         <img
                             src={
                                 user.profilePicture
@@ -212,20 +217,20 @@ const ProfilePage = () => {
                             }}
                         />
                     </div>
-                    <div className="profile-info-header">
-                        <h1 className={`profile-name ${theme === 'dark' ? 'text-light' : ''}`}>{user.name}</h1>
-                        <span className="profile-role">
+                    <div className="profile-text-info">
+                        <h1 className="profile-name">{user.name}</h1>
+                        <div className="profile-role">
                             {user.isAdmin ? (
-                                <Badge bg="danger" className="me-2">Admin</Badge>
+                                <Badge bg="danger" className="role-badge">Admin</Badge>
                             ) : (
-                                <Badge bg="primary" className="me-2">Member</Badge>
+                                <Badge bg="primary" className="role-badge">Member</Badge>
                             )}
-                            RoomMate User
-                        </span>
+                            <span className="ms-2 role-text">RoomMate User</span>
+                        </div>
                     </div>
                 </div>
 
-                <Row className="mt-5 pt-3">
+                <Row className="mt-4">
                     {/* Left Sidebar - Info */}
                     <Col lg={4} className="mb-4">
                         <Card className={`shadow-sm border-0 mb-4 ${theme === 'dark' ? 'bg-dark text-light border-secondary' : ''}`}>
@@ -351,31 +356,62 @@ const ProfilePage = () => {
                                 ) : (
                                     <>
                                         <div className="mb-3">
-                                            <div className="d-flex align-items-center text-muted mb-1">
+                                            <div className="d-flex align-items-center text-muted mb-1 small text-uppercase fw-semibold" style={{ letterSpacing: '0.5px' }}>
                                                 <BsEnvelope className="me-2" /> Email
                                             </div>
                                             <div className="fw-medium">{user.email}</div>
                                         </div>
 
                                         <div className="mb-3">
-                                            <div className="d-flex align-items-center text-muted mb-1">
+                                            <div className="d-flex align-items-center text-muted mb-1 small text-uppercase fw-semibold" style={{ letterSpacing: '0.5px' }}>
                                                 <BsPhone className="me-2" /> Phone
                                             </div>
-                                            <div className="fw-medium">{user.phone || "Not set"}</div>
+                                            <div className="fw-medium">{user.phone || <span className="text-muted fst-italic">Not set</span>}</div>
                                         </div>
 
                                         <div className="mb-3">
-                                            <div className="d-flex align-items-center text-muted mb-1">
+                                            <div className="d-flex align-items-center text-muted mb-1 small text-uppercase fw-semibold" style={{ letterSpacing: '0.5px' }}>
                                                 <BsGeoAlt className="me-2" /> Location
                                             </div>
-                                            <div className="fw-medium">{user.location || "Not set"}</div>
+                                            <div className="fw-medium">{user.location || <span className="text-muted fst-italic">Not set</span>}</div>
                                         </div>
 
                                         <div className="mb-3">
-                                            <div className="d-flex align-items-center text-muted mb-1">
+                                            <div className="d-flex align-items-center text-muted mb-1 small text-uppercase fw-semibold" style={{ letterSpacing: '0.5px' }}>
                                                 <BsCardHeading className="me-2" /> Aadhar
                                             </div>
-                                            <div className="fw-medium">{user.aadhar || "Not set"}</div>
+                                            <div className="fw-medium">{user.aadhar || <span className="text-muted fst-italic">Not set</span>}</div>
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <div className="d-flex align-items-center text-muted mb-1 small text-uppercase fw-semibold" style={{ letterSpacing: '0.5px' }}>
+                                                <BsPersonBadge className="me-2" /> Role
+                                            </div>
+                                            <div className="fw-medium d-flex align-items-center gap-2">
+                                                {user.isAdmin ? (
+                                                    <Badge bg="danger" className="px-2 py-1">Admin</Badge>
+                                                ) : (
+                                                    <Badge bg="info" className="px-2 py-1" style={{ textTransform: 'capitalize' }}>{user.role || 'User'}</Badge>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <div className="d-flex align-items-center text-muted mb-1 small text-uppercase fw-semibold" style={{ letterSpacing: '0.5px' }}>
+                                                <BsCalendarCheck className="me-2" /> Member Since
+                                            </div>
+                                            <div className="fw-medium">
+                                                {user.createdAt ? new Date(user.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : 'N/A'}
+                                            </div>
+                                        </div>
+
+                                        <div className="mb-0">
+                                            <div className="d-flex align-items-center text-muted mb-1 small text-uppercase fw-semibold" style={{ letterSpacing: '0.5px' }}>
+                                                <BsClock className="me-2" /> Last Updated
+                                            </div>
+                                            <div className="fw-medium">
+                                                {user.updatedAt ? new Date(user.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'N/A'}
+                                            </div>
                                         </div>
                                     </>
                                 )}
@@ -401,24 +437,112 @@ const ProfilePage = () => {
                             </Card.Body>
                         </Card>
 
-                        {/* Stats Card */}
-                        <Card className={`shadow-sm border-0 ${theme === 'dark' ? 'bg-dark text-light border-secondary' : ''}`}>
-                            <Card.Body>
-                                <h6 className="fw-bold mb-3">Community Stats</h6>
-                                <div className="d-flex justify-content-between mb-2">
-                                    <span>Listings Posted</span>
-                                    <span className="fw-bold">{myListings.length}</span>
+                        {/* Verification Status Card */}
+                        <Card className={`shadow-sm border-0 mb-4 rounded-4 overflow-hidden ${theme === 'dark' ? 'bg-dark text-light' : ''}`}>
+                            <Card.Body className="p-3">
+                                <h6 className="fw-bold mb-3 d-flex align-items-center gap-2">
+                                    <BsShieldCheck className="text-success" /> Verification Status
+                                </h6>
+                                <div className="d-flex justify-content-between align-items-center mb-2 py-1">
+                                    <span className="d-flex align-items-center gap-2 small"><BsEnvelopeCheck /> Email</span>
+                                    {user.email ? (
+                                        <Badge bg="success" className="d-flex align-items-center gap-1 px-2 py-1 rounded-pill"><BsPatchCheckFill size={10} /> Verified</Badge>
+                                    ) : (
+                                        <Badge bg="warning" text="dark" className="px-2 py-1 rounded-pill">Pending</Badge>
+                                    )}
                                 </div>
-                                <div className="d-flex justify-content-between mb-2">
-                                    <span>Reviews</span>
-                                    <span className="fw-bold">0</span>
+                                <div className="d-flex justify-content-between align-items-center mb-2 py-1">
+                                    <span className="d-flex align-items-center gap-2 small"><BsPhone /> Phone</span>
+                                    {user.phone ? (
+                                        <Badge bg="success" className="d-flex align-items-center gap-1 px-2 py-1 rounded-pill"><BsPatchCheckFill size={10} /> Verified</Badge>
+                                    ) : (
+                                        <Badge bg="secondary" className="d-flex align-items-center gap-1 px-2 py-1 rounded-pill"><BsPatchExclamation size={10} /> Not Set</Badge>
+                                    )}
                                 </div>
-                                <div className="d-flex justify-content-between">
-                                    <span>Member Since</span>
-                                    <span className="fw-bold">Nov 2023</span>
+                                <div className="d-flex justify-content-between align-items-center mb-2 py-1">
+                                    <span className="d-flex align-items-center gap-2 small"><BsCardHeading /> Aadhar / ID</span>
+                                    {user.aadhar ? (
+                                        <Badge bg="success" className="d-flex align-items-center gap-1 px-2 py-1 rounded-pill"><BsPatchCheckFill size={10} /> Verified</Badge>
+                                    ) : (
+                                        <Badge bg="secondary" className="d-flex align-items-center gap-1 px-2 py-1 rounded-pill"><BsPatchExclamation size={10} /> Not Set</Badge>
+                                    )}
+                                </div>
+                                <div className="d-flex justify-content-between align-items-center py-1">
+                                    <span className="d-flex align-items-center gap-2 small"><BsGeoAlt /> Location</span>
+                                    {user.location ? (
+                                        <Badge bg="success" className="d-flex align-items-center gap-1 px-2 py-1 rounded-pill"><BsPatchCheckFill size={10} /> Set</Badge>
+                                    ) : (
+                                        <Badge bg="secondary" className="d-flex align-items-center gap-1 px-2 py-1 rounded-pill"><BsPatchExclamation size={10} /> Not Set</Badge>
+                                    )}
                                 </div>
                             </Card.Body>
                         </Card>
+
+                        {/* Community Stats Card */}
+                        <Card className={`shadow-sm border-0 mb-4 rounded-4 overflow-hidden ${theme === 'dark' ? 'bg-dark text-light' : ''}`}>
+                            <Card.Body className="p-3">
+                                <h6 className="fw-bold mb-3 d-flex align-items-center gap-2">
+                                    <BsBarChart className="text-primary" /> Community Stats
+                                </h6>
+                                <div className="d-flex justify-content-between align-items-center mb-2 py-1">
+                                    <span className="d-flex align-items-center gap-2 small"><BsHouseDoor /> Listings Posted</span>
+                                    <Badge bg="primary" pill className="px-2">{myListings.length}</Badge>
+                                </div>
+                                <div className="d-flex justify-content-between align-items-center mb-2 py-1">
+                                    <span className="d-flex align-items-center gap-2 small"><BsHeart /> Saved Homes</span>
+                                    <Badge bg="danger" pill className="px-2">{user.favorites ? user.favorites.length : 0}</Badge>
+                                </div>
+                                <div className="d-flex justify-content-between align-items-center mb-2 py-1">
+                                    <span className="d-flex align-items-center gap-2 small"><BsStarFill className="text-warning" /> Reviews</span>
+                                    <Badge bg="warning" text="dark" pill className="px-2">0</Badge>
+                                </div>
+                                <div className="d-flex justify-content-between align-items-center py-1">
+                                    <span className="d-flex align-items-center gap-2 small"><BsCalendarCheck /> Member Since</span>
+                                    <span className="fw-bold small">{user.createdAt ? new Date(user.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'N/A'}</span>
+                                </div>
+                            </Card.Body>
+                        </Card>
+
+                        {/* Notification Preferences */}
+                        <Card className={`shadow-sm border-0 mb-4 rounded-4 overflow-hidden ${theme === 'dark' ? 'bg-dark text-light' : ''}`}>
+                            <Card.Body className="p-3">
+                                <h6 className="fw-bold mb-3 d-flex align-items-center gap-2">
+                                    <BsBell className="text-info" /> Notification Preferences
+                                </h6>
+                                <div className="d-flex justify-content-between align-items-center mb-2 py-1">
+                                    <span className="small">Push Notifications</span>
+                                    <Badge bg={user.pushNotifications !== false ? 'success' : 'secondary'} pill className="px-2">
+                                        {user.pushNotifications !== false ? 'On' : 'Off'}
+                                    </Badge>
+                                </div>
+                                <div className="d-flex justify-content-between align-items-center py-1">
+                                    <span className="small">Email Notifications</span>
+                                    <Badge bg={user.emailNotifications !== false ? 'success' : 'secondary'} pill className="px-2">
+                                        {user.emailNotifications !== false ? 'On' : 'Off'}
+                                    </Badge>
+                                </div>
+                            </Card.Body>
+                        </Card>
+
+                        {/* Admin Panel Card - Only visible for admins */}
+                        {user.isAdmin && (
+                            <Card className="shadow-sm border-0 rounded-4 overflow-hidden" style={{ background: 'linear-gradient(135deg, #6366f1 0%, #ec4899 100%)' }}>
+                                <Card.Body className="p-3 text-white">
+                                    <h6 className="fw-bold mb-2 d-flex align-items-center gap-2">
+                                        <BsPeopleFill /> Admin Panel
+                                    </h6>
+                                    <p className="small mb-3 opacity-75">You have administrator privileges. Manage users, listings, and platform settings.</p>
+                                    <Button
+                                        variant="light"
+                                        size="sm"
+                                        className="w-100 fw-bold rounded-pill"
+                                        onClick={() => navigate('/admin')}
+                                    >
+                                        Go to Admin Dashboard →
+                                    </Button>
+                                </Card.Body>
+                            </Card>
+                        )}
                     </Col>
 
                     {/* Right Content - Tabs */}
@@ -560,7 +684,7 @@ const ProfilePage = () => {
                 </Modal>
             </Container>
             <Footer />
-        </>
+        </div>
     );
 };
 

@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Form, Spinner, Alert } from "react-bootstrap";
 import NavbarComponent from "../components/NavbarComponent";
 import Footer from "../components/Footer";
-import { BsCheckCircle, BsShieldLock, BsPerson, BsCreditCard, BsCalendar, BsLock, BsWallet2, BsBank } from "react-icons/bs";
+import { BsCheckCircle, BsShieldLock, BsPerson, BsCreditCard, BsCalendar, BsLock, BsWallet2, BsBank, BsShieldCheck, BsArrowLeft, BsClock } from "react-icons/bs";
 import { useTheme } from "../context/ThemeContext";
 import "./PaymentPage.css";
 
@@ -36,16 +36,13 @@ const PaymentPage = () => {
     // Validation Handlers
     const handleNameChange = (e) => {
         const value = e.target.value;
-        // Allow alphabets and spaces only
         if (/^[a-zA-Z\s]*$/.test(value)) {
             setCardName(value);
         }
     };
 
     const handleCardNumberChange = (e) => {
-        const value = e.target.value.replace(/\D/g, ''); // Remove non-digits
-
-        // Add space every 4 digits for readability
+        const value = e.target.value.replace(/\D/g, '');
         let formattedValue = '';
         for (let i = 0; i < value.length; i++) {
             if (i > 0 && i % 4 === 0) {
@@ -53,19 +50,15 @@ const PaymentPage = () => {
             }
             formattedValue += value[i];
         }
-
         if (value.length <= 16) {
             setCardNumber(formattedValue);
         }
     };
 
     const handleExpiryChange = (e) => {
-        let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
-
-        if (value.length > 4) return; // MMYY is max 4 digits
-
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 4) return;
         if (value.length >= 2) {
-            // Insert slash
             value = value.substring(0, 2) + '/' + value.substring(2);
         }
         setExpiryDate(value);
@@ -73,7 +66,6 @@ const PaymentPage = () => {
 
     const handleCvvChange = (e) => {
         const value = e.target.value;
-        // Allow numbers only, max 4 digits
         if (/^[0-9]*$/.test(value) && value.length <= 4) {
             setCvv(value);
         }
@@ -83,7 +75,6 @@ const PaymentPage = () => {
         setLoading(true);
         setError(null);
 
-        // Basic validation before submit
         if (paymentMethod === "card") {
             if (!cardName || cardNumber.replace(/\s/g, '').length < 16 || expiryDate.length < 5 || cvv.length < 3) {
                 setError("Please fill in all card details correctly.");
@@ -98,7 +89,6 @@ const PaymentPage = () => {
             }
         }
 
-        // Simulate payment processing delay
         setTimeout(async () => {
             try {
                 const token = localStorage.getItem("token");
@@ -137,13 +127,18 @@ const PaymentPage = () => {
         return (
             <>
                 <NavbarComponent />
-                <Container className={`py-5 mt-5 text-center ${theme === 'dark' ? 'text-light' : ''}`} style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                    <div className="mb-4 text-success animate__animated animate__bounceIn">
-                        <BsCheckCircle size={80} />
+                <Container className={`py-5 mt-5 ${theme === 'dark' ? 'text-light' : ''}`}>
+                    <div className="payment-success-container">
+                        <div className="success-icon-wrapper">
+                            <BsCheckCircle size={48} className="text-success" />
+                        </div>
+                        <h2 className="fw-bold mb-2">Payment Successful!</h2>
+                        <p className="text-muted lead mb-1">Your room has been successfully booked.</p>
+                        <p className="text-muted small">Redirecting you to your profile...</p>
+                        <div className="mt-3">
+                            <Spinner animation="border" size="sm" variant="success" />
+                        </div>
                     </div>
-                    <h2 className="fw-bold mb-3">Payment Successful!</h2>
-                    <p className="lead text-muted mb-4">Your room has been successfully booked.</p>
-                    <p>Redirecting you to your profile...</p>
                 </Container>
                 <Footer />
             </>
@@ -154,63 +149,100 @@ const PaymentPage = () => {
         <>
             <NavbarComponent />
             <div className={`payment-page-container pt-5 mt-5 ${theme === 'dark' ? 'dark-mode text-light' : ''}`}>
-                <Container className="py-5">
-                    <div className="text-center mb-5">
-                        <h2 className="fw-bold display-6">Secure Checkout</h2>
-                        <p className="text-muted lead">Complete your booking securely</p>
+                <Container className="py-4 py-md-5">
+
+                    {/* Header Section */}
+                    <div className="text-center mb-4">
+                        <div className="payment-header-badge mb-3">
+                            <BsShieldCheck size={14} /> Secure Checkout
+                        </div>
+                        <h2 className="fw-bold mb-1" style={{ fontSize: '1.8rem' }}>Complete Your Booking</h2>
+                        <p className="text-muted mb-0 small">Your payment is encrypted and securely processed</p>
                     </div>
 
-                    <Row className="g-5">
+                    {/* Checkout Progress Steps */}
+                    <div className="d-flex justify-content-center mb-5">
+                        <div className="checkout-steps">
+                            <div className="checkout-step completed">
+                                <span className="step-dot"></span>
+                                <span>Details</span>
+                            </div>
+                            <div className="step-connector" style={{ background: '#059669' }}></div>
+                            <div className="checkout-step active">
+                                <span className="step-dot"></span>
+                                <span>Payment</span>
+                            </div>
+                            <div className="step-connector"></div>
+                            <div className="checkout-step">
+                                <span className="step-dot"></span>
+                                <span>Confirmation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <Row className="g-4 g-lg-5">
                         {/* Left Column: Payment Details */}
                         <Col lg={7}>
                             <div className="glass-card p-4 p-md-5 mb-4">
-                                <h4 className="fw-bold mb-4">Select Payment Method</h4>
+                                {/* Payment Method Selection */}
+                                <div className="section-label">
+                                    <BsWallet2 /> Choose Payment Method
+                                </div>
 
-                                <div className="row g-3 mb-5">
-                                    <div className="col-md-6">
+                                <div className="row g-3 mb-4">
+                                    <div className="col-6">
                                         <div
                                             className={`payment-method-card p-3 d-flex align-items-center ${paymentMethod === "card" ? "active" : ""}`}
                                             onClick={() => setPaymentMethod("card")}
                                         >
-                                            <div className="bg-primary bg-opacity-10 p-2 rounded-circle me-3">
-                                                <BsCreditCard className="text-primary" size={24} />
+                                            <div className="d-flex align-items-center justify-content-center rounded-circle me-3"
+                                                style={{ width: 42, height: 42, background: 'linear-gradient(135deg, rgba(99,102,241,0.12), rgba(99,102,241,0.06))' }}>
+                                                <BsCreditCard style={{ color: '#6366f1' }} size={18} />
                                             </div>
                                             <div>
-                                                <h6 className="mb-0 fw-bold">Card</h6>
-                                                <small className="text-muted">Credit / Debit</small>
+                                                <div className="fw-bold" style={{ fontSize: '0.9rem' }}>Card</div>
+                                                <small className="text-muted" style={{ fontSize: '0.75rem' }}>Credit / Debit</small>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-md-6">
+                                    <div className="col-6">
                                         <div
                                             className={`payment-method-card p-3 d-flex align-items-center ${paymentMethod === "upi" ? "active" : ""}`}
                                             onClick={() => setPaymentMethod("upi")}
                                         >
-                                            <div className="bg-success bg-opacity-10 p-2 rounded-circle me-3">
-                                                <BsWallet2 className="text-success" size={24} />
+                                            <div className="d-flex align-items-center justify-content-center rounded-circle me-3"
+                                                style={{ width: 42, height: 42, background: 'linear-gradient(135deg, rgba(5,150,105,0.12), rgba(5,150,105,0.06))' }}>
+                                                <BsWallet2 style={{ color: '#059669' }} size={18} />
                                             </div>
                                             <div>
-                                                <h6 className="mb-0 fw-bold">UPI / Netbanking</h6>
-                                                <small className="text-muted">GPay, PhonePe, etc.</small>
+                                                <div className="fw-bold" style={{ fontSize: '0.9rem' }}>UPI</div>
+                                                <small className="text-muted" style={{ fontSize: '0.75rem' }}>GPay, PhonePe, etc.</small>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <h5 className="fw-bold mb-3">Payment Details</h5>
-                                <Alert variant={theme === 'dark' ? "dark" : "light"} className="d-flex align-items-center border-0 bg-opacity-50 mb-4">
-                                    <BsShieldLock className="text-success me-3" size={24} />
-                                    <div>
-                                        <small className="text-muted d-block">Bank Level Security</small>
-                                        <strong>256-bit SSL Encrypted Payment</strong>
-                                    </div>
-                                </Alert>
+                                <hr className="my-4" style={{ opacity: 0.08 }} />
 
+                                {/* Security Info */}
+                                <div className="security-banner d-flex align-items-center mb-4">
+                                    <BsShieldLock className="text-success me-3 flex-shrink-0" size={20} />
+                                    <div>
+                                        <div className="fw-bold small">Bank-Level Security</div>
+                                        <div className="text-muted" style={{ fontSize: '0.75rem' }}>256-bit SSL Encrypted • PCI DSS Compliant</div>
+                                    </div>
+                                </div>
+
+                                {/* Card Form */}
                                 <Form>
                                     {paymentMethod === "card" ? (
-                                        <div className="animate__animated animate__fadeIn">
+                                        <div>
+                                            <div className="section-label">
+                                                <BsCreditCard /> Card Details
+                                            </div>
+
                                             <Form.Group className="mb-4" controlId="cardName">
-                                                <Form.Label className="fw-medium">Name on Card</Form.Label>
+                                                <Form.Label className="fw-semibold small text-muted">Cardholder Name</Form.Label>
                                                 <div className="input-icon-wrapper">
                                                     <BsPerson className="input-icon" />
                                                     <Form.Control
@@ -224,7 +256,7 @@ const PaymentPage = () => {
                                             </Form.Group>
 
                                             <Form.Group className="mb-4" controlId="cardNumber">
-                                                <Form.Label className="fw-medium">Card Number</Form.Label>
+                                                <Form.Label className="fw-semibold small text-muted">Card Number</Form.Label>
                                                 <div className="input-icon-wrapper">
                                                     <BsCreditCard className="input-icon" />
                                                     <Form.Control
@@ -236,12 +268,18 @@ const PaymentPage = () => {
                                                         maxLength="19"
                                                     />
                                                 </div>
+                                                <div className="accepted-cards mt-2">
+                                                    <span className="card-brand">VISA</span>
+                                                    <span className="card-brand">MASTERCARD</span>
+                                                    <span className="card-brand">RUPAY</span>
+                                                    <span className="card-brand">AMEX</span>
+                                                </div>
                                             </Form.Group>
 
-                                            <Row>
+                                            <Row className="g-3">
                                                 <Col md={6}>
                                                     <Form.Group className="mb-4" controlId="expiryDate">
-                                                        <Form.Label className="fw-medium">Expiry Date</Form.Label>
+                                                        <Form.Label className="fw-semibold small text-muted">Expiry Date</Form.Label>
                                                         <div className="input-icon-wrapper">
                                                             <BsCalendar className="input-icon" />
                                                             <Form.Control
@@ -257,12 +295,12 @@ const PaymentPage = () => {
                                                 </Col>
                                                 <Col md={6}>
                                                     <Form.Group className="mb-4" controlId="cvv">
-                                                        <Form.Label className="fw-medium">CVV</Form.Label>
+                                                        <Form.Label className="fw-semibold small text-muted">CVV / CVC</Form.Label>
                                                         <div className="input-icon-wrapper">
                                                             <BsLock className="input-icon" />
                                                             <Form.Control
                                                                 type="password"
-                                                                placeholder="123"
+                                                                placeholder="•••"
                                                                 className="modern-input with-icon"
                                                                 value={cvv}
                                                                 onChange={handleCvvChange}
@@ -274,23 +312,34 @@ const PaymentPage = () => {
                                             </Row>
                                         </div>
                                     ) : (
-                                        <div className="animate__animated animate__fadeIn">
+                                        <div>
+                                            <div className="section-label">
+                                                <BsBank /> UPI Payment
+                                            </div>
+
                                             <Form.Group className="mb-4" controlId="upiId">
-                                                <Form.Label className="fw-medium">UPI ID</Form.Label>
+                                                <Form.Label className="fw-semibold small text-muted">UPI ID</Form.Label>
                                                 <div className="input-icon-wrapper">
                                                     <BsBank className="input-icon" />
                                                     <Form.Control
                                                         type="text"
-                                                        placeholder="username@upi"
+                                                        placeholder="yourname@upi"
                                                         className="modern-input with-icon"
                                                         value={upiId}
                                                         onChange={(e) => setUpiId(e.target.value)}
                                                     />
                                                 </div>
-                                                <Form.Text className="text-muted ms-2">
-                                                    Enter your UPI ID (e.g., Google Pay, PhonePe, Paytm)
+                                                <Form.Text className="text-muted" style={{ fontSize: '0.75rem' }}>
+                                                    Enter your UPI ID linked to Google Pay, PhonePe, Paytm, or any UPI app
                                                 </Form.Text>
                                             </Form.Group>
+
+                                            <div className="d-flex gap-2 flex-wrap">
+                                                <span className="card-brand">Google Pay</span>
+                                                <span className="card-brand">PhonePe</span>
+                                                <span className="card-brand">Paytm</span>
+                                                <span className="card-brand">BHIM</span>
+                                            </div>
                                         </div>
                                     )}
                                 </Form>
@@ -299,46 +348,72 @@ const PaymentPage = () => {
 
                         {/* Right Column: Order Summary */}
                         <Col lg={5}>
-                            <div className="glass-card p-4 sticky-top" style={{ top: "100px" }}>
-                                <h5 className="fw-bold mb-4 border-bottom pb-3">Order Summary</h5>
+                            <div className="glass-card p-4 sticky-order-summary">
 
-                                <div className="d-flex align-items-center mb-4 p-3 rounded" style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)' }}>
+                                <div className="section-label">
+                                    📋 Order Summary
+                                </div>
+
+                                {/* Listing Preview */}
+                                <div className="d-flex align-items-center mb-4 p-3 rounded-3"
+                                    style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.02)' }}>
                                     <img
                                         src={listing.images[0] || "https://via.placeholder.com/150"}
                                         alt={listing.title}
-                                        className="rounded me-3 shadow-sm"
-                                        style={{ width: "80px", height: "80px", objectFit: "cover" }}
+                                        className="rounded-3 me-3 shadow-sm"
+                                        style={{ width: "70px", height: "70px", objectFit: "cover" }}
                                     />
                                     <div>
-                                        <h6 className="fw-bold mb-1">{listing.title}</h6>
-                                        <div className="d-flex align-items-center">
-                                            <BsCheckCircle className="text-success me-1" size={12} />
-                                            <small className="text-success fw-bold">Verified Listing</small>
+                                        <h6 className="fw-bold mb-1" style={{ fontSize: '0.9rem' }}>{listing.title}</h6>
+                                        <div className="d-flex align-items-center gap-1">
+                                            <BsCheckCircle className="text-success" size={11} />
+                                            <small className="text-success fw-bold" style={{ fontSize: '0.72rem' }}>Verified Listing</small>
                                         </div>
-                                        <small className="text-muted d-block mt-1">{listing.location}</small>
+                                        <small className="text-muted d-block" style={{ fontSize: '0.75rem' }}>{listing.location}</small>
                                     </div>
                                 </div>
 
+                                {/* Booking Details */}
+                                {bookingData && (
+                                    <div className="mb-3 p-3 rounded-3" style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.015)' }}>
+                                        <div className="d-flex justify-content-between mb-2">
+                                            <small className="text-muted">Move-in</small>
+                                            <small className="fw-bold">{bookingData.moveInDate || '—'}</small>
+                                        </div>
+                                        <div className="d-flex justify-content-between mb-2">
+                                            <small className="text-muted">Duration</small>
+                                            <small className="fw-bold">{bookingData.duration} {bookingData.duration == 1 ? 'month' : 'months'}</small>
+                                        </div>
+                                        <div className="d-flex justify-content-between">
+                                            <small className="text-muted">Guests</small>
+                                            <small className="fw-bold">{bookingData.guests}</small>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Price Breakdown */}
                                 <div className="summary-item d-flex justify-content-between">
-                                    <span className="text-muted">Rent per month</span>
+                                    <span className="text-muted small">Rent per month</span>
                                     <span className="fw-bold">₹{listing.price.toLocaleString()}</span>
                                 </div>
                                 <div className="summary-item d-flex justify-content-between">
-                                    <span className="text-muted">Service Fee</span>
+                                    <span className="text-muted small">Service Fee</span>
                                     <span className="fw-bold text-success">Free</span>
                                 </div>
-                                <div className="summary-item d-flex justify-content-between mb-3">
-                                    <span className="text-muted">Booking Fee</span>
+                                <div className="summary-item d-flex justify-content-between">
+                                    <span className="text-muted small">Booking Fee</span>
                                     <span className="fw-bold">₹0</span>
                                 </div>
 
-                                <div className="d-flex justify-content-between align-items-center p-3 rounded mb-4 mt-2" style={{ background: 'rgba(13, 110, 253, 0.1)' }}>
-                                    <span className="h6 mb-0 fw-bold text-primary">Total Amount</span>
-                                    <span className="h4 mb-0 fw-bold text-primary">₹{listing.price.toLocaleString()}</span>
+                                {/* Total Amount */}
+                                <div className="total-amount-box d-flex justify-content-between align-items-center mt-3 mb-4">
+                                    <span className="fw-bold" style={{ color: '#6366f1' }}>Total Amount</span>
+                                    <span className="fw-bold" style={{ fontSize: '1.4rem', color: '#6366f1' }}>₹{listing.price.toLocaleString()}</span>
                                 </div>
 
-                                {error && <Alert variant="danger" className="mb-3 rounded-3 border-0 shadow-sm">{error}</Alert>}
+                                {error && <Alert variant="danger" className="mb-3 rounded-3 border-0 shadow-sm small">{error}</Alert>}
 
+                                {/* Pay Button */}
                                 <Button
                                     className="w-100 py-3 pay-btn-gradient"
                                     size="lg"
@@ -348,24 +423,32 @@ const PaymentPage = () => {
                                     {loading ? (
                                         <>
                                             <Spinner animation="border" size="sm" className="me-2" />
-                                            Processing...
+                                            Processing Payment...
                                         </>
                                     ) : (
                                         <>
-                                            Pay ₹{listing.price.toLocaleString()} <span className="ms-1 opacity-75">Securely</span>
+                                            <BsLock className="me-2" size={16} />
+                                            Pay ₹{listing.price.toLocaleString()} Securely
                                         </>
                                     )}
                                 </Button>
 
-                                <div className="text-center mt-3">
-                                    <small className="text-muted d-inline-flex align-items-center">
-                                        <BsLock className="me-1" size={12} /> 100% Secure Payment
-                                    </small>
+                                {/* Trust Badges */}
+                                <div className="trust-badges mt-3">
+                                    <div className="trust-badge-item">
+                                        <BsLock size={12} /> Encrypted
+                                    </div>
+                                    <div className="trust-badge-item">
+                                        <BsShieldCheck size={12} /> Verified
+                                    </div>
+                                    <div className="trust-badge-item">
+                                        <BsClock size={12} /> Instant
+                                    </div>
                                 </div>
                             </div>
-                        </Col >
-                    </Row >
-                </Container >
+                        </Col>
+                    </Row>
+                </Container>
             </div>
             <Footer />
         </>

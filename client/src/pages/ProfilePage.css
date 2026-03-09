@@ -1,88 +1,180 @@
-.profile-header {
+/* Container for the page background so it flows seamlessly */
+.profile-page-wrapper {
+    padding-top: 0px;
+    background-color: #f8f9fa;
+    /* Light theme background */
+}
+
+.profile-page-wrapper.bg-dark {
+    background-color: #212529 !important;
+}
+
+.cover-image-container {
+    width: 100%;
+    height: 250px;
     position: relative;
-    margin-bottom: 80px;
+    margin-top: 56px;
+    /* Accounts for fixed navbar */
+}
+
+@media (max-width: 992px) {
+    .cover-image-container {
+        margin-top: 54px;
+    }
 }
 
 .cover-image {
-    height: 200px;
-    background: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);
-    border-radius: 15px;
     width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    /* Premium purple/blue gradient */
+    border-radius: 0;
 }
 
-.profile-avatar-container {
-    position: absolute;
-    bottom: -60px;
-    left: 50px;
-    padding: 5px;
+.profile-content-container {
+    position: relative;
+    top: -50px;
+    z-index: 10;
+}
+
+.profile-header-info {
+    display: flex;
+    align-items: flex-end;
+    padding: 0 20px;
+    margin-bottom: 20px;
+}
+
+.profile-avatar-wrapper {
     background: white;
+    padding: 6px;
     border-radius: 50%;
+    margin-right: 25px;
+    position: relative;
+    z-index: 11;
+}
+
+.bg-dark .profile-avatar-wrapper {
+    background: #212529;
+    /* Match dark theme */
 }
 
 .profile-avatar {
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
     object-fit: cover;
     border: 4px solid white;
 }
 
-.profile-info-header {
-    position: absolute;
-    bottom: -50px;
-    left: 190px;
+.bg-dark .profile-avatar {
+    border-color: #2b3035;
+}
+
+.profile-text-info {
+    padding-bottom: 15px;
+    /* Align with avatar */
 }
 
 .profile-name {
+    font-size: 2rem;
     font-weight: 800;
-    margin-bottom: 0;
-    color: #212529;
+    margin-bottom: 5px;
+    color: #1f2937;
+    letter-spacing: -0.025em;
+}
+
+.bg-dark .profile-name {
+    color: #f9fafb !important;
 }
 
 .profile-role {
-    font-size: 0.9rem;
-    color: #6c757d;
+    font-size: 1rem;
+    color: #6b7280;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
 }
 
-@media (max-width: 768px) {
-    .profile-header {
-        margin-bottom: 140px;
-        /* Increase space for stacked content */
-        text-align: center;
-    }
-
-    .profile-avatar-container {
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: -60px;
-    }
-
-    .profile-info-header {
-        left: 0;
-        right: 0;
-        bottom: -120px;
-        /* Move text below avatar */
-        text-align: center;
-    }
+.bg-dark .profile-role {
+    color: #9ca3af;
 }
 
-.nav-tabs-custom .nav-link {
-    color: #6c757d;
-    border: none;
-    border-bottom: 3px solid transparent;
-    padding: 1rem 1.5rem;
+.role-badge {
+    padding: 0.4em 0.8em;
+    font-weight: 600;
+    border-radius: 20px;
+}
+
+.role-text {
     font-weight: 500;
 }
 
+/* Redesign cards to feel more premium */
+.card {
+    border-radius: 16px !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Tabs */
+.nav-tabs-custom {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.bg-dark .nav-tabs-custom {
+    border-bottom-color: #374151;
+}
+
+.nav-tabs-custom .nav-link {
+    color: #6b7280;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 1.25rem 1.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
 .nav-tabs-custom .nav-link.active {
-    color: #0d6efd;
-    border-bottom: 3px solid #0d6efd;
+    color: #4f46e5;
+    border-bottom: 3px solid #4f46e5;
     background: transparent;
 }
 
-.nav-tabs-custom .nav-link:hover {
+.bg-dark .nav-tabs-custom .nav-link.active {
+    color: #818cf8;
+    border-bottom-color: #818cf8;
+}
+
+.nav-tabs-custom .nav-link:hover:not(.active) {
     border-color: transparent;
-    color: #0d6efd;
+    color: #4f46e5;
+    background: rgba(79, 70, 229, 0.05);
+    /* Slight tint on hover */
+    border-radius: 8px 8px 0 0;
+}
+
+.bg-dark .nav-tabs-custom .nav-link:hover:not(.active) {
+    color: #818cf8;
+    background: rgba(129, 140, 248, 0.05);
+}
+
+@media (max-width: 768px) {
+    .profile-header-info {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 0;
+    }
+
+    .profile-avatar-wrapper {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+
+    .profile-text-info {
+        padding-bottom: 0;
+    }
 }
 
 .listing-placeholder {

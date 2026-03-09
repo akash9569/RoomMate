@@ -559,255 +559,322 @@ const ListingDetailsPage = () => {
             </Modal>
 
             {/* Booking Request Modal */}
-            <Modal show={showBookingModal} onHide={() => setShowBookingModal(false)} centered size="lg">
-                <Modal.Header closeButton>
-                    <Modal.Title>Book Now</Modal.Title>
+            {/* Booking Request Modal - Premium Redesign */}
+            <Modal show={showBookingModal} onHide={() => setShowBookingModal(false)} centered size="lg" className="booking-modal">
+                <Modal.Header closeButton className="border-0 pb-0" style={{ background: 'linear-gradient(135deg, #6366f1 0%, #06b6d4 100%)' }}>
+                    <Modal.Title className="text-white fw-bold d-flex align-items-center gap-2">
+                        <BsCheckCircle /> Book This Room
+                    </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                    <p className="text-muted mb-4">Please fill in your details to request a booking for this room.</p>
+                <Modal.Body className="px-4 py-4">
+                    <p className="text-muted mb-4 small">Complete the form below to submit your booking request. All fields marked are required.</p>
                     <Form onSubmit={handleBookingSubmit}>
-                        <Row>
-                            <Col md={6}>
-                                <Form.Group className="mb-3" controlId="moveInDate">
-                                    <Form.Label>Move-in Date</Form.Label>
-                                    <Form.Control
-                                        type="date"
-                                        name="moveInDate"
-                                        value={bookingData.moveInDate}
-                                        onChange={handleBookingChange}
-                                        isInvalid={!!validationErrors.moveInDate}
-                                        required
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        {validationErrors.moveInDate}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
-                            </Col>
-                            <Col md={3}>
-                                <Form.Group className="mb-3" controlId="duration">
-                                    <Form.Label>Duration (Months)</Form.Label>
-                                    <Form.Control
-                                        type="number"
-                                        min="1"
-                                        name="duration"
-                                        value={bookingData.duration}
-                                        onChange={handleBookingChange}
-                                        isInvalid={!!validationErrors.duration}
-                                        required
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        {validationErrors.duration}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
-                            </Col>
-                            <Col md={3}>
-                                <Form.Group className="mb-3" controlId="guests">
-                                    <Form.Label>Guests</Form.Label>
-                                    <Form.Control
-                                        type="number"
-                                        min="1"
-                                        name="guests"
-                                        value={bookingData.guests}
-                                        onChange={handleBookingChange}
-                                        isInvalid={!!validationErrors.guests}
-                                        required
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        {validationErrors.guests}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
-                            </Col>
-                        </Row>
 
-                        <Form.Group className="mb-3" controlId="fullName">
-                            <Form.Label>Full Name</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter your full name"
-                                name="fullName"
-                                value={bookingData.fullName}
-                                onChange={handleBookingChange}
-                                required
-                            />
-                        </Form.Group>
+                        {/* Section 1: Stay Details */}
+                        <div className="mb-4 p-3 rounded-4" style={{ background: 'rgba(99,102,241,0.06)', border: '1px solid rgba(99,102,241,0.15)' }}>
+                            <h6 className="fw-bold mb-3 d-flex align-items-center gap-2 text-primary" style={{ fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                📅 Stay Details
+                            </h6>
+                            <Row className="g-3">
+                                <Col md={5}>
+                                    <Form.Group controlId="moveInDate">
+                                        <Form.Label className="small fw-semibold text-muted">Move-in Date</Form.Label>
+                                        <Form.Control
+                                            type="date"
+                                            name="moveInDate"
+                                            value={bookingData.moveInDate}
+                                            onChange={handleBookingChange}
+                                            isInvalid={!!validationErrors.moveInDate}
+                                            required
+                                            className="rounded-3 py-2"
+                                            style={{ border: '1px solid rgba(255,255,255,0.2)' }}
+                                        />
+                                        <Form.Control.Feedback type="invalid">{validationErrors.moveInDate}</Form.Control.Feedback>
+                                    </Form.Group>
+                                </Col>
+                                <Col md={4}>
+                                    <Form.Group controlId="duration">
+                                        <Form.Label className="small fw-semibold text-muted">Duration (Months)</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            min="1"
+                                            name="duration"
+                                            value={bookingData.duration}
+                                            onChange={handleBookingChange}
+                                            isInvalid={!!validationErrors.duration}
+                                            required
+                                            className="rounded-3 py-2"
+                                            style={{ border: '1px solid rgba(255,255,255,0.2)' }}
+                                        />
+                                        <Form.Control.Feedback type="invalid">{validationErrors.duration}</Form.Control.Feedback>
+                                    </Form.Group>
+                                </Col>
+                                <Col md={3}>
+                                    <Form.Group controlId="guests">
+                                        <Form.Label className="small fw-semibold text-muted">Guests</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            min="1"
+                                            name="guests"
+                                            value={bookingData.guests}
+                                            onChange={handleBookingChange}
+                                            isInvalid={!!validationErrors.guests}
+                                            required
+                                            className="rounded-3 py-2"
+                                            style={{ border: '1px solid rgba(255,255,255,0.2)' }}
+                                        />
+                                        <Form.Control.Feedback type="invalid">{validationErrors.guests}</Form.Control.Feedback>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        </div>
 
-                        <Form.Group className="mb-3" controlId="email">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control
-                                type="email"
-                                placeholder="your.email@example.com"
-                                name="email"
-                                value={bookingData.email}
-                                onChange={handleBookingChange}
-                                isInvalid={!!validationErrors.email}
-                                required
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {validationErrors.email}
-                            </Form.Control.Feedback>
-                        </Form.Group>
+                        {/* Section 2: Personal Information */}
+                        <div className="mb-4 p-3 rounded-4" style={{ background: 'rgba(6,182,212,0.06)', border: '1px solid rgba(6,182,212,0.15)' }}>
+                            <h6 className="fw-bold mb-3 d-flex align-items-center gap-2" style={{ fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px', color: '#06b6d4' }}>
+                                👤 Personal Information
+                            </h6>
+                            <Row className="g-3">
+                                <Col md={6}>
+                                    <Form.Group controlId="fullName">
+                                        <Form.Label className="small fw-semibold text-muted">Full Name</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Enter your full name"
+                                            name="fullName"
+                                            value={bookingData.fullName}
+                                            onChange={handleBookingChange}
+                                            required
+                                            className="rounded-3 py-2"
+                                            style={{ border: '1px solid rgba(255,255,255,0.2)' }}
+                                        />
+                                    </Form.Group>
+                                </Col>
+                                <Col md={6}>
+                                    <Form.Group controlId="email">
+                                        <Form.Label className="small fw-semibold text-muted">Email Address</Form.Label>
+                                        <Form.Control
+                                            type="email"
+                                            placeholder="your.email@example.com"
+                                            name="email"
+                                            value={bookingData.email}
+                                            onChange={handleBookingChange}
+                                            isInvalid={!!validationErrors.email}
+                                            required
+                                            className="rounded-3 py-2"
+                                            style={{ border: '1px solid rgba(255,255,255,0.2)' }}
+                                        />
+                                        <Form.Control.Feedback type="invalid">{validationErrors.email}</Form.Control.Feedback>
+                                    </Form.Group>
+                                </Col>
+                                <Col md={6}>
+                                    <Form.Group controlId="phone">
+                                        <Form.Label className="small fw-semibold text-muted">Phone Number</Form.Label>
+                                        <Form.Control
+                                            type="tel"
+                                            placeholder="10-digit mobile number"
+                                            name="phone"
+                                            value={bookingData.phone}
+                                            onChange={handleBookingChange}
+                                            isInvalid={!!validationErrors.phone}
+                                            required
+                                            maxLength={10}
+                                            className="rounded-3 py-2"
+                                            style={{ border: '1px solid rgba(255,255,255,0.2)' }}
+                                        />
+                                        <Form.Control.Feedback type="invalid">{validationErrors.phone}</Form.Control.Feedback>
+                                    </Form.Group>
+                                </Col>
+                                <Col md={6}>
+                                    <Form.Group controlId="gender">
+                                        <Form.Label className="small fw-semibold text-muted">Gender</Form.Label>
+                                        <Form.Select
+                                            name="gender"
+                                            value={bookingData.gender}
+                                            onChange={handleBookingChange}
+                                            required
+                                            className="rounded-3 py-2"
+                                            style={{ border: '1px solid rgba(255,255,255,0.2)' }}
+                                        >
+                                            <option value="">Select gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </Form.Select>
+                                    </Form.Group>
+                                </Col>
+                                <Col md={6}>
+                                    <Form.Group controlId="dob">
+                                        <Form.Label className="small fw-semibold text-muted">Date of Birth</Form.Label>
+                                        <Form.Control
+                                            type="date"
+                                            name="dob"
+                                            value={bookingData.dob}
+                                            onChange={handleBookingChange}
+                                            required
+                                            className="rounded-3 py-2"
+                                            style={{ border: '1px solid rgba(255,255,255,0.2)' }}
+                                        />
+                                    </Form.Group>
+                                </Col>
+                                <Col md={6}>
+                                    <Form.Group controlId="permanentAddress">
+                                        <Form.Label className="small fw-semibold text-muted">Permanent Address</Form.Label>
+                                        <Form.Control
+                                            as="textarea"
+                                            rows={1}
+                                            placeholder="Enter your permanent address"
+                                            name="permanentAddress"
+                                            value={bookingData.permanentAddress}
+                                            onChange={handleBookingChange}
+                                            required
+                                            className="rounded-3 py-2"
+                                            style={{ border: '1px solid rgba(255,255,255,0.2)' }}
+                                        />
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        </div>
 
-                        <Form.Group className="mb-3" controlId="phone">
-                            <Form.Label>Phone Number</Form.Label>
-                            <Form.Control
-                                type="tel"
-                                placeholder="Enter your phone number"
-                                name="phone"
-                                value={bookingData.phone}
-                                onChange={handleBookingChange}
-                                isInvalid={!!validationErrors.phone}
-                                required
-                                maxLength={10}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {validationErrors.phone}
-                            </Form.Control.Feedback>
-                        </Form.Group>
+                        {/* Section 3: Verification Documents */}
+                        <div className="mb-4 p-3 rounded-4" style={{ background: 'rgba(236,72,153,0.06)', border: '1px solid rgba(236,72,153,0.15)' }}>
+                            <h6 className="fw-bold mb-3 d-flex align-items-center gap-2" style={{ fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px', color: '#ec4899' }}>
+                                🛡️ Verification Documents
+                            </h6>
+                            <Row className="g-3">
+                                <Col md={12}>
+                                    <Form.Group controlId="aadharNumber">
+                                        <Form.Label className="small fw-semibold text-muted">Aadhar Number</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Enter 12-digit Aadhar number"
+                                            name="aadharNumber"
+                                            value={bookingData.aadharNumber}
+                                            onChange={handleBookingChange}
+                                            isInvalid={!!validationErrors.aadharNumber}
+                                            required
+                                            maxLength={12}
+                                            className="rounded-3 py-2"
+                                            style={{ border: '1px solid rgba(255,255,255,0.2)' }}
+                                        />
+                                        <Form.Control.Feedback type="invalid">{validationErrors.aadharNumber}</Form.Control.Feedback>
+                                    </Form.Group>
+                                </Col>
+                                <Col md={6}>
+                                    <Form.Group controlId="aadharPhoto">
+                                        <Form.Label className="small fw-semibold text-muted">Aadhar Photo</Form.Label>
+                                        <Form.Control
+                                            type="file"
+                                            name="aadharPhoto"
+                                            onChange={handleBookingChange}
+                                            accept="image/*"
+                                            className="rounded-3 py-2"
+                                            style={{ border: '1px solid rgba(255,255,255,0.2)' }}
+                                        />
+                                        <Form.Text className="text-muted" style={{ fontSize: '0.75rem' }}>Upload a clear photo of your Aadhar card</Form.Text>
+                                    </Form.Group>
+                                </Col>
+                                <Col md={6}>
+                                    <Form.Group controlId="userImage">
+                                        <Form.Label className="small fw-semibold text-muted">Your Photo</Form.Label>
+                                        <Form.Control
+                                            type="file"
+                                            name="userImage"
+                                            onChange={handleBookingChange}
+                                            accept="image/*"
+                                            className="rounded-3 py-2"
+                                            style={{ border: '1px solid rgba(255,255,255,0.2)' }}
+                                        />
+                                        <Form.Text className="text-muted" style={{ fontSize: '0.75rem' }}>Upload a recent passport-size photo</Form.Text>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        </div>
 
-                        <Form.Group className="mb-3" controlId="aadharNumber">
-                            <Form.Label>Aadhar Number</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter 12-digit Aadhar number"
-                                name="aadharNumber"
-                                value={bookingData.aadharNumber}
-                                onChange={handleBookingChange}
-                                isInvalid={!!validationErrors.aadharNumber}
-                                required
-                                maxLength={12}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {validationErrors.aadharNumber}
-                            </Form.Control.Feedback>
-                        </Form.Group>
-
-                        <Form.Group className="mb-3" controlId="aadharPhoto">
-                            <Form.Label>Aadhar Photo</Form.Label>
-                            <Form.Control
-                                type="file"
-                                name="aadharPhoto"
-                                onChange={handleBookingChange}
-                                accept="image/*"
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3" controlId="userImage">
-                            <Form.Label>User Image</Form.Label>
-                            <Form.Control
-                                type="file"
-                                name="userImage"
-                                onChange={handleBookingChange}
-                                accept="image/*"
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3" controlId="gender">
-                            <Form.Label>Gender</Form.Label>
-                            <Form.Select
-                                name="gender"
-                                value={bookingData.gender}
-                                onChange={handleBookingChange}
-                                required
+                        <div className="d-grid mt-4">
+                            <Button
+                                variant="primary"
+                                type="submit"
+                                size="lg"
+                                className="fw-bold py-3 rounded-pill shadow"
+                                style={{ background: 'linear-gradient(135deg, #6366f1 0%, #06b6d4 100%)', border: 'none', letterSpacing: '0.5px' }}
                             >
-                                <option value="">Select gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
-                            </Form.Select>
-                        </Form.Group>
-
-                        <Form.Group className="mb-3" controlId="dob">
-                            <Form.Label>Date of Birth</Form.Label>
-                            <Form.Control
-                                type="date"
-                                name="dob"
-                                value={bookingData.dob}
-                                onChange={handleBookingChange}
-                                required
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3" controlId="permanentAddress">
-                            <Form.Label>Permanent Address</Form.Label>
-                            <Form.Control
-                                as="textarea"
-                                rows={3}
-                                placeholder="Enter your permanent address"
-                                name="permanentAddress"
-                                value={bookingData.permanentAddress}
-                                onChange={handleBookingChange}
-                                required
-                            />
-                        </Form.Group>
-
-                        <div className="d-grid gap-2 mt-4">
-                            <Button variant="primary" type="submit" size="lg">
-                                Next
+                                Proceed to Payment →
                             </Button>
                         </div>
                     </Form>
                 </Modal.Body>
             </Modal>
 
-            {/* Schedule Tour Modal */}
+            {/* Schedule Tour Modal - Premium Redesign */}
             <Modal show={showTourModal} onHide={() => setShowTourModal(false)} centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Schedule a Tour</Modal.Title>
+                <Modal.Header closeButton className="border-0 pb-0" style={{ background: 'linear-gradient(135deg, #059669 0%, #06b6d4 100%)' }}>
+                    <Modal.Title className="text-white fw-bold d-flex align-items-center gap-2">
+                        🏠 Schedule a Tour
+                    </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                    <p className="text-muted mb-4">Fill in your details to schedule a tour of this room</p>
+                <Modal.Body className="px-4 py-4">
+                    <p className="text-muted mb-4 small">Fill in your details and we'll arrange a property visit for you.</p>
                     <Form onSubmit={handleTourSubmit}>
-                        <Form.Group className="mb-3" controlId="tourFullName">
-                            <Form.Label>Full Name</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter your full name"
-                                name="fullName"
-                                value={tourData.fullName}
-                                onChange={handleTourChange}
-                                isInvalid={!!tourValidationErrors.fullName}
-                                required
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {tourValidationErrors.fullName}
-                            </Form.Control.Feedback>
-                        </Form.Group>
+                        <div className="p-3 rounded-4 mb-3" style={{ background: 'rgba(5,150,105,0.06)', border: '1px solid rgba(5,150,105,0.15)' }}>
+                            <Form.Group className="mb-3" controlId="tourFullName">
+                                <Form.Label className="small fw-semibold text-muted">Full Name</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter your full name"
+                                    name="fullName"
+                                    value={tourData.fullName}
+                                    onChange={handleTourChange}
+                                    isInvalid={!!tourValidationErrors.fullName}
+                                    required
+                                    className="rounded-3 py-2"
+                                    style={{ border: '1px solid rgba(255,255,255,0.2)' }}
+                                />
+                                <Form.Control.Feedback type="invalid">{tourValidationErrors.fullName}</Form.Control.Feedback>
+                            </Form.Group>
 
-                        <Form.Group className="mb-3" controlId="tourPhone">
-                            <Form.Label>Phone Number</Form.Label>
-                            <Form.Control
-                                type="tel"
-                                placeholder="Enter your phone number"
-                                name="phone"
-                                value={tourData.phone}
-                                onChange={handleTourChange}
-                                isInvalid={!!tourValidationErrors.phone}
-                                required
-                                maxLength={10}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {tourValidationErrors.phone}
-                            </Form.Control.Feedback>
-                        </Form.Group>
+                            <Form.Group className="mb-3" controlId="tourPhone">
+                                <Form.Label className="small fw-semibold text-muted">Phone Number</Form.Label>
+                                <Form.Control
+                                    type="tel"
+                                    placeholder="10-digit mobile number"
+                                    name="phone"
+                                    value={tourData.phone}
+                                    onChange={handleTourChange}
+                                    isInvalid={!!tourValidationErrors.phone}
+                                    required
+                                    maxLength={10}
+                                    className="rounded-3 py-2"
+                                    style={{ border: '1px solid rgba(255,255,255,0.2)' }}
+                                />
+                                <Form.Control.Feedback type="invalid">{tourValidationErrors.phone}</Form.Control.Feedback>
+                            </Form.Group>
 
-                        <Form.Group className="mb-3" controlId="tourDate">
-                            <Form.Label>Preferred Tour Date</Form.Label>
-                            <Form.Control
-                                type="date"
-                                name="tourDate"
-                                value={tourData.tourDate}
-                                onChange={handleTourChange}
-                                isInvalid={!!tourValidationErrors.tourDate}
-                                required
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {tourValidationErrors.tourDate}
-                            </Form.Control.Feedback>
-                        </Form.Group>
+                            <Form.Group controlId="tourDate">
+                                <Form.Label className="small fw-semibold text-muted">Preferred Tour Date</Form.Label>
+                                <Form.Control
+                                    type="date"
+                                    name="tourDate"
+                                    value={tourData.tourDate}
+                                    onChange={handleTourChange}
+                                    isInvalid={!!tourValidationErrors.tourDate}
+                                    required
+                                    className="rounded-3 py-2"
+                                    style={{ border: '1px solid rgba(255,255,255,0.2)' }}
+                                />
+                                <Form.Control.Feedback type="invalid">{tourValidationErrors.tourDate}</Form.Control.Feedback>
+                            </Form.Group>
+                        </div>
 
-                        <div className="d-grid gap-2 mt-4">
-                            <Button variant="primary" type="submit" size="lg" style={{ backgroundColor: '#008080', borderColor: '#008080' }}>
-                                Schedule Tour
+                        <div className="d-grid mt-4">
+                            <Button
+                                variant="primary"
+                                type="submit"
+                                size="lg"
+                                className="fw-bold py-3 rounded-pill shadow"
+                                style={{ background: 'linear-gradient(135deg, #059669 0%, #06b6d4 100%)', border: 'none', letterSpacing: '0.5px' }}
+                            >
+                                Schedule Tour →
                             </Button>
                         </div>
                     </Form>

@@ -3,7 +3,7 @@ import { Container, Card, ListGroup, Button, Form, Modal, Alert } from "react-bo
 import NavbarComponent from "../components/NavbarComponent";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
-import { BsShieldLock, BsBell, BsTrash, BsArrowLeft, BsMoon, BsSun } from "react-icons/bs";
+import { BsShieldLock, BsBell, BsTrash, BsArrowLeft, BsMoon, BsSun, BsSearch, BsWallet2, BsCalendarCheck } from "react-icons/bs";
 import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
 
@@ -15,6 +15,9 @@ const SettingsPage = () => {
     // Notification states
     const [pushNotifs, setPushNotifs] = useState(user?.pushNotifications ?? true);
     const [emailNotifs, setEmailNotifs] = useState(user?.emailNotifications ?? true);
+
+    // Advanced Roommate states
+    const [lookingForRoommate, setLookingForRoommate] = useState(user?.lookingForRoommate ?? true);
 
     // Password change states
     const [showPasswordModal, setShowPasswordModal] = useState(false);
@@ -114,23 +117,24 @@ const SettingsPage = () => {
     return (
         <>
             <NavbarComponent />
-            <Container className="py-5 mt-5" style={{ maxWidth: "800px" }}>
-                <div className="d-flex align-items-center mb-4">
-                    <Button variant="link" className="text-dark p-0 me-3" onClick={() => navigate("/profile")}>
-                        <BsArrowLeft size={24} />
-                    </Button>
-                    <h2 className="mb-0">Settings</h2>
+            <Container className="py-5 mt-5" style={{ maxWidth: "850px" }}>
+                <div className="d-flex align-items-center justify-content-between mb-5">
+                    <h2 className="mb-0 fw-bold" style={{ letterSpacing: "-0.5px" }}>Settings</h2>
                 </div>
 
-                <Card className="shadow-sm border-0 mb-4">
-                    <Card.Header className="bg-body-tertiary fw-bold py-3">Appearance</Card.Header>
+                <Card className={`shadow-sm border-0 mb-5 rounded-4 overflow-hidden ${theme === 'dark' ? 'bg-dark' : 'bg-white'}`}>
+                    <Card.Header className={`fw-bold py-3 px-4 border-bottom-0 fs-5 ${theme === 'dark' ? 'bg-dark text-light border-secondary' : 'bg-light text-dark'}`}>
+                        Appearance
+                    </Card.Header>
                     <ListGroup variant="flush">
-                        <ListGroup.Item className="d-flex justify-content-between align-items-center py-3">
+                        <ListGroup.Item className={`d-flex justify-content-between align-items-center py-4 px-4 border-0 ${theme === 'dark' ? 'bg-dark text-light border-top border-secondary' : 'bg-white border-top'}`}>
                             <div className="d-flex align-items-center">
-                                {theme === "dark" ? <BsMoon className="me-3 text-primary" size={20} /> : <BsSun className="me-3 text-warning" size={20} />}
+                                <div className="p-2 rounded-circle bg-opacity-10 me-3" style={{ backgroundColor: theme === 'dark' ? 'rgba(13, 110, 253, 0.2)' : 'rgba(13, 110, 253, 0.1)' }}>
+                                    {theme === "dark" ? <BsMoon className="text-primary" size={22} /> : <BsSun className="text-warning" size={22} />}
+                                </div>
                                 <div>
-                                    <div className="fw-medium">Dark Mode</div>
-                                    <small className="text-muted">Switch between light and dark themes.</small>
+                                    <div className="fw-semibold mb-1 fs-6">Dark Mode</div>
+                                    <small className={`${theme === 'dark' ? 'text-secondary' : 'text-muted'}`}>Switch between light and dark themes.</small>
                                 </div>
                             </div>
                             <Form.Check
@@ -138,76 +142,147 @@ const SettingsPage = () => {
                                 id="theme-switch"
                                 checked={theme === "dark"}
                                 onChange={toggleTheme}
+                                className="fs-5"
                             />
                         </ListGroup.Item>
                     </ListGroup>
                 </Card>
 
-                <Card className="shadow-sm border-0 mb-4">
-                    <Card.Header className="bg-body-tertiary fw-bold py-3">Account Security</Card.Header>
+                <Card className={`shadow-sm border-0 mb-5 rounded-4 overflow-hidden ${theme === 'dark' ? 'bg-dark' : 'bg-white'}`}>
+                    <Card.Header className={`fw-bold py-3 px-4 border-bottom-0 fs-5 ${theme === 'dark' ? 'bg-dark text-light border-secondary' : 'bg-light text-dark'}`}>
+                        Roommate Preferences
+                    </Card.Header>
                     <ListGroup variant="flush">
-                        <ListGroup.Item className="d-flex justify-content-between align-items-center py-3">
+                        <ListGroup.Item className={`d-flex justify-content-between align-items-center py-4 px-4 border-0 ${theme === 'dark' ? 'bg-dark text-light border-top border-secondary' : 'bg-white border-top'}`}>
                             <div className="d-flex align-items-center">
-                                <BsShieldLock className="me-3 text-primary" size={20} />
+                                <div className="p-2 rounded-circle bg-opacity-10 me-3" style={{ backgroundColor: theme === 'dark' ? 'rgba(13, 202, 240, 0.2)' : 'rgba(13, 202, 240, 0.1)' }}>
+                                    <BsSearch className="text-info" size={22} />
+                                </div>
                                 <div>
-                                    <div className="fw-medium">Change Password</div>
-                                    <small className="text-muted">Update your password regularly to keep your account secure.</small>
+                                    <div className="fw-semibold mb-1 fs-6">Looking for Roommates</div>
+                                    <small className={`${theme === 'dark' ? 'text-secondary' : 'text-muted'}`}>Make your profile visible to others searching for roommates.</small>
                                 </div>
                             </div>
-                            <Button variant="outline-primary" size="sm" onClick={() => setShowPasswordModal(true)}>
+                            <Form.Check
+                                type="switch"
+                                id="looking-for-roommates"
+                                checked={lookingForRoommate}
+                                onChange={(e) => setLookingForRoommate(e.target.checked)}
+                                className="fs-5"
+                            />
+                        </ListGroup.Item>
+                        <ListGroup.Item className={`d-flex justify-content-between align-items-center py-4 px-4 border-0 ${theme === 'dark' ? 'bg-dark text-light border-top border-secondary' : 'bg-white border-top'}`}>
+                            <div className="d-flex align-items-center">
+                                <div className="p-2 rounded-circle bg-opacity-10 me-3" style={{ backgroundColor: theme === 'dark' ? 'rgba(111, 66, 193, 0.2)' : 'rgba(111, 66, 193, 0.1)' }}>
+                                    <BsWallet2 size={22} style={{ color: '#6f42c1' }} />
+                                </div>
+                                <div>
+                                    <div className="fw-semibold mb-1 fs-6">Budget Range</div>
+                                    <small className={`${theme === 'dark' ? 'text-secondary' : 'text-muted'}`}>Update your monthly budget range to get better matches.</small>
+                                </div>
+                            </div>
+                            <Button variant={theme === 'dark' ? 'outline-light' : 'outline-dark'} className="rounded-pill px-4" size="sm">
+                                Configure
+                            </Button>
+                        </ListGroup.Item>
+                        <ListGroup.Item className={`d-flex justify-content-between align-items-center py-4 px-4 border-0 ${theme === 'dark' ? 'bg-dark text-light border-top border-secondary' : 'bg-white border-top'}`}>
+                            <div className="d-flex align-items-center">
+                                <div className="p-2 rounded-circle bg-opacity-10 me-3" style={{ backgroundColor: theme === 'dark' ? 'rgba(214, 51, 132, 0.2)' : 'rgba(214, 51, 132, 0.1)' }}>
+                                    <BsCalendarCheck size={22} style={{ color: '#d63384' }} />
+                                </div>
+                                <div>
+                                    <div className="fw-semibold mb-1 fs-6">Move-in Date</div>
+                                    <small className={`${theme === 'dark' ? 'text-secondary' : 'text-muted'}`}>Set your preferred move-in timeline.</small>
+                                </div>
+                            </div>
+                            <Button variant={theme === 'dark' ? 'outline-light' : 'outline-dark'} className="rounded-pill px-4" size="sm">
+                                Configure
+                            </Button>
+                        </ListGroup.Item>
+                    </ListGroup>
+                </Card>
+
+                <Card className={`shadow-sm border-0 mb-5 rounded-4 overflow-hidden ${theme === 'dark' ? 'bg-dark' : 'bg-white'}`}>
+                    <Card.Header className={`fw-bold py-3 px-4 border-bottom-0 fs-5 ${theme === 'dark' ? 'bg-dark text-light border-secondary' : 'bg-light text-dark'}`}>
+                        Account Security
+                    </Card.Header>
+                    <ListGroup variant="flush">
+                        <ListGroup.Item className={`d-flex justify-content-between align-items-center py-4 px-4 border-0 ${theme === 'dark' ? 'bg-dark text-light border-top border-secondary' : 'bg-white border-top'}`}>
+                            <div className="d-flex align-items-center">
+                                <div className="p-2 rounded-circle bg-opacity-10 me-3" style={{ backgroundColor: theme === 'dark' ? 'rgba(25, 135, 84, 0.2)' : 'rgba(25, 135, 84, 0.1)' }}>
+                                    <BsShieldLock className="text-success" size={22} />
+                                </div>
+                                <div>
+                                    <div className="fw-semibold mb-1 fs-6">Change Password</div>
+                                    <small className={`${theme === 'dark' ? 'text-secondary' : 'text-muted'}`}>Update your password regularly to keep your account secure.</small>
+                                </div>
+                            </div>
+                            <Button variant={theme === 'dark' ? 'outline-light' : 'outline-dark'} className="rounded-pill px-4" size="sm" onClick={() => setShowPasswordModal(true)}>
                                 Update
                             </Button>
                         </ListGroup.Item>
                     </ListGroup>
                 </Card>
 
-                <Card className="shadow-sm border-0 mb-4">
-                    <Card.Header className="bg-body-tertiary fw-bold py-3">Notifications</Card.Header>
+                <Card className={`shadow-sm border-0 mb-5 rounded-4 overflow-hidden ${theme === 'dark' ? 'bg-dark' : 'bg-white'}`}>
+                    <Card.Header className={`fw-bold py-3 px-4 border-bottom-0 fs-5 ${theme === 'dark' ? 'bg-dark text-light border-secondary' : 'bg-light text-dark'}`}>
+                        Notifications
+                    </Card.Header>
                     <ListGroup variant="flush">
-                        <ListGroup.Item className="d-flex justify-content-between align-items-center py-3">
+                        <ListGroup.Item className={`d-flex justify-content-between align-items-center py-4 px-4 border-0 ${theme === 'dark' ? 'bg-dark text-light border-top border-secondary' : 'bg-white border-top'}`}>
                             <div className="d-flex align-items-center">
-                                <BsBell className="me-3 text-warning" size={20} />
+                                <div className="p-2 rounded-circle bg-opacity-10 me-3" style={{ backgroundColor: theme === 'dark' ? 'rgba(255, 193, 7, 0.2)' : 'rgba(255, 193, 7, 0.1)' }}>
+                                    <BsBell className="text-warning" size={22} />
+                                </div>
                                 <div>
-                                    <div className="fw-medium">Push Notifications</div>
-                                    <small className="text-muted">Receive updates about new listings and messages.</small>
+                                    <div className="fw-semibold mb-1 fs-6">Push Notifications</div>
+                                    <small className={`${theme === 'dark' ? 'text-secondary' : 'text-muted'}`}>Receive updates about new listings and messages.</small>
                                 </div>
                             </div>
                             <Form.Check
                                 type="switch"
                                 id="push-notifications"
                                 checked={pushNotifs}
-                                onChange={(e) => handleToggleNotification('push', e.target.checked)} />
+                                onChange={(e) => handleToggleNotification('push', e.target.checked)}
+                                className="fs-5"
+                            />
                         </ListGroup.Item>
-                        <ListGroup.Item className="d-flex justify-content-between align-items-center py-3">
+                        <ListGroup.Item className={`d-flex justify-content-between align-items-center py-4 px-4 border-0 ${theme === 'dark' ? 'bg-dark text-light border-top border-secondary' : 'bg-white border-top'}`}>
                             <div className="d-flex align-items-center">
-                                <BsBell className="me-3 text-secondary" size={20} />
+                                <div className="p-2 rounded-circle bg-opacity-10 me-3" style={{ backgroundColor: theme === 'dark' ? 'rgba(108, 117, 125, 0.2)' : 'rgba(108, 117, 125, 0.1)' }}>
+                                    <BsBell className="text-secondary" size={22} />
+                                </div>
                                 <div>
-                                    <div className="fw-medium">Email Notifications</div>
-                                    <small className="text-muted">Receive weekly newsletters and account alerts.</small>
+                                    <div className="fw-semibold mb-1 fs-6">Email Notifications</div>
+                                    <small className={`${theme === 'dark' ? 'text-secondary' : 'text-muted'}`}>Receive weekly newsletters and account alerts.</small>
                                 </div>
                             </div>
                             <Form.Check
                                 type="switch"
                                 id="email-notifications"
                                 checked={emailNotifs}
-                                onChange={(e) => handleToggleNotification('email', e.target.checked)} />
+                                onChange={(e) => handleToggleNotification('email', e.target.checked)}
+                                className="fs-5"
+                            />
                         </ListGroup.Item>
                     </ListGroup>
                 </Card>
 
-                <Card className="shadow-sm border-0 border-danger">
-                    <Card.Header className="bg-danger text-white fw-bold py-3">Danger Zone</Card.Header>
-                    <Card.Body>
-                        <div className="d-flex justify-content-between align-items-center">
+                <Card className={`shadow-sm border-1 border-danger mb-5 rounded-4 overflow-hidden ${theme === 'dark' ? 'bg-dark' : 'bg-white'}`}>
+                    <Card.Header className="bg-danger bg-opacity-10 text-danger fw-bold py-3 px-4 border-bottom-0 fs-5">
+                        Danger Zone
+                    </Card.Header>
+                    <ListGroup variant="flush">
+                        <ListGroup.Item className={`d-flex justify-content-between align-items-center py-4 px-4 border-0 border-top border-danger border-opacity-25 ${theme === 'dark' ? 'bg-dark' : 'bg-white'}`}>
                             <div>
-                                <div className="fw-medium text-danger">Delete Account</div>
-                                <small className="text-muted">Permanently remove your account and all data.</small>
+                                <div className="fw-bold text-danger mb-1 fs-6">Delete Account</div>
+                                <small className={`${theme === 'dark' ? 'text-secondary' : 'text-muted'}`}>Permanently remove your account and all data.</small>
                             </div>
-                            <Button variant="danger" size="sm" onClick={() => setShowDeleteModal(true)}>
+                            <Button variant="danger" className="rounded-pill px-4 py-2 fw-semibold" onClick={() => setShowDeleteModal(true)}>
                                 <BsTrash className="me-2" /> Delete Account
                             </Button>
-                        </div>
-                    </Card.Body>
+                        </ListGroup.Item>
+                    </ListGroup>
                 </Card>
             </Container>
 

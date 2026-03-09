@@ -214,6 +214,7 @@ const PostListing = () => {
                         placeholder="e.g., Spacious 1BHK in Downtown"
                         required
                         onChange={handleChange}
+                        style={{ border: "1px solid rgba(255,255,255,0.2)" }}
                       />
                     </Form.Group>
                   </Col>
@@ -227,6 +228,7 @@ const PostListing = () => {
                         placeholder="e.g., 15000"
                         required
                         onChange={handleChange}
+                        style={{ border: "1px solid rgba(255,255,255,0.2)" }}
                       />
                     </Form.Group>
                   </Col>
@@ -242,6 +244,7 @@ const PostListing = () => {
                     placeholder="Describe the property..."
                     required
                     onChange={handleChange}
+                    style={{ border: "1px solid rgba(255,255,255,0.2)" }}
                   />
                 </Form.Group>
 
@@ -256,6 +259,7 @@ const PostListing = () => {
                         placeholder="City, Area"
                         required
                         onChange={handleChange}
+                        style={{ border: "1px solid rgba(255,255,255,0.2)" }}
                       />
                     </Form.Group>
                   </Col>
@@ -269,6 +273,7 @@ const PostListing = () => {
                         placeholder="Your contact number"
                         required
                         onChange={handleChange}
+                        style={{ border: "1px solid rgba(255,255,255,0.2)" }}
                       />
                     </Form.Group>
                   </Col>
@@ -282,6 +287,7 @@ const PostListing = () => {
                     value={formData.aadhar}
                     placeholder="Enter Aadhar Number"
                     onChange={handleChange}
+                    style={{ border: "1px solid rgba(255,255,255,0.2)" }}
                   />
                 </Form.Group>
 
@@ -293,6 +299,7 @@ const PostListing = () => {
                     value={formData.amenities}
                     placeholder="WiFi, AC, Parking, Gym"
                     onChange={handleChange}
+                    style={{ border: "1px solid rgba(255,255,255,0.2)" }}
                   />
                 </Form.Group>
 
@@ -306,6 +313,7 @@ const PostListing = () => {
                         multiple
                         onChange={handleImageUpload}
                         disabled={uploading}
+                        style={{ border: "1px solid rgba(255,255,255,0.2)" }}
                       />
                     </div>
 
@@ -322,6 +330,7 @@ const PostListing = () => {
                           placeholder="https://example.com/image.jpg"
                           value={imageUrlInput}
                           onChange={(e) => setImageUrlInput(e.target.value)}
+                          style={{ border: "1px solid rgba(255,255,255,0.2)" }}
                         />
                         <Button variant="outline-primary" onClick={handleAddImageUrl} type="button">
                           Add URL
